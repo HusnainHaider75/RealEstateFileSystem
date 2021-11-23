@@ -1,0 +1,11 @@
+.Booking-Background-CSS {
+  background-image: url(Background_Image.jpg);
+      width: 1217px;
+      height: 1238px;
+      background-size: cover;
+      flex: 7;
+      margin-left: 100px;
+      margin-right: 100px;
+      margin-top: 10px;
+}
+    
