@@ -27,7 +27,7 @@ export default function QR_Code() {
       "http://localhost:4000/loadpagesetting"
     );
     if (PageSettingLoaded) {
-      let temp = PageSettingLoaded.data[0].PageSettingString
+      let temp =  PageSettingLoaded && PageSettingLoaded.data[0] && PageSettingLoaded.data[0].PageSettingString
       SetPageAlignment(JSON.parse(temp));
     } else {
       alert("Error!");

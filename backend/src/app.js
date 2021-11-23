@@ -8,7 +8,9 @@ app.use(cors());
 require("./connection/dbCon");
 const UserFilesModel = require("./schema/UserFilesModel");
 const SettingsModel = require("./schema/SettingsModel");
-const Multer = require('multer');
+const multer = require('multer');
+const path = require("path");
+
 
 //Create New File
 app.post("/createuser", async (req, res) => {
@@ -118,7 +120,7 @@ app.get(`/loadpagesetting`, async (req, res) => {
 //Change Values for fixing page Alignment (For QRCode)
 app.post(`/pagesetting`, async (req, res) => {
 
-  SettingString = JSON.stringify(req.body);
+  let SettingString = JSON.stringify(req.body);
 
   let size = 0;
   const PageSettingExist = await SettingsModel.find();

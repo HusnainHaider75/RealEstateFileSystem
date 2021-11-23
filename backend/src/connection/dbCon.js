@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-mongoose.connect("mongodb+srv://userfiles:userfiles@cluster0.nfp70.mongodb.net/HousingSystemData?retryWrites=true&w=majority",
+
+mongoose.connect("mongodb://localhost:27017/HousingSystemData",
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
