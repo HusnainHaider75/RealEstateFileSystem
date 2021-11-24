@@ -14,7 +14,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import IntinitationFrom_QR_Code from "./pages/FormsSetting/IntinitationFromSettings";
 import BookingForm_QR_Code from "./pages/FormsSetting/BookingFormSetting";
 import TopLeftSetting from './pages/Settings/TopLeftSetting';
-import { useParams } from "react-router";
 
 function App() {
   const{ isAuthenticated }=useAuth0();
@@ -24,7 +23,8 @@ function App() {
     <Router> 
       { isAuthenticated ? <Topbar/> : ""}
       <div className="container"> 
-      { isAuthenticated ? <Sidebar/> : "" } 
+      { isAuthenticated ? <Sidebar/> : "" }
+       
         <Switch>
           <Route exact path="/" component={Login}/>
           <Route exact path="/home" component={Home}/>

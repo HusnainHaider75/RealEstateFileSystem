@@ -21,7 +21,24 @@ export default function TopLeftSetting() {
         'content-type': 'multipart/form-data'
       }
     };
-    axios.post("http://localhost:4000/upload", formData, config)
+    axios.post("http://localhost:4000/uploadintimationletter", formData, config)
+      .then((res) => {
+        alert("The file is successfully uploaded");
+      }).catch((error) => {
+        alert(error)
+      });
+  }
+
+  function onFormSubmit1(e) {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('BookingFormBackgroundPicture', state.file);
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    };
+    axios.post("http://localhost:4000/uploadbookingform", formData, config)
       .then((res) => {
         alert("The file is successfully uploaded");
       }).catch((error) => {
@@ -80,11 +97,11 @@ export default function TopLeftSetting() {
   const SubmitPageSetting = async () => {
     console.log(SettingOfPage)
     const result = await axios.post("http://localhost:4000/pagesetting", SettingOfPage);
-    // if (result.data) {
-    //   redirect.push(`/users`);
-    // } else {
-    //   redirect.push(`/users`);
-    // }
+    if (result.data) {
+      redirect.push(`/users`);
+    } else {
+      redirect.push(`/users`);
+    }
   };
 
 
@@ -450,7 +467,7 @@ export default function TopLeftSetting() {
               <br /><br />
             </div>
             <Grid>
-            <form onSubmit={onFormSubmit}>
+            <form onSubmit={onFormSubmit1}>
               <input type="file" name="BackgroundImage" onChange={ImageInput} />
               <button type="submit">Upload</button>
             </form>

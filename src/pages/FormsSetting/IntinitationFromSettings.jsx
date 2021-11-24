@@ -26,7 +26,7 @@ export default function QR_Code() {
       "http://localhost:4000/loadpagesetting"
     );
     if (PageSettingLoaded) {
-      let temp =  PageSettingLoaded && PageSettingLoaded.data[0] && PageSettingLoaded.data[0].PageSettingString
+      let temp = PageSettingLoaded && PageSettingLoaded.data[0] && PageSettingLoaded.data[0].PageSettingString
       SetPageAlignment(JSON.parse(temp));
     } else {
       alert("Error!");
@@ -43,21 +43,50 @@ export default function QR_Code() {
     <>
       <div className="Intimation-Background-CSS" >
         <div >
-          <h3 style={{
-            marginLeft: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.registrationkey.LeftMargin}`,
-            marginTop: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.registrationkey.TopMargin}`
+            {imageUrl ? (
+              <a href={imageUrl} download>
+                <img src={imageUrl} alt="img" width="120" height="130"
+                  style={{
+                    marginLeft: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.qrcode.LeftMargin}`,
+                    marginTop: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.qrcode.TopMargin}`,
+                    position: "absolute"
+                  }}
+                />
+              </a>
+            ) : null}
+
+            <h5 style={{
+              marginLeft: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.registrationkey.LeftMargin}`,
+              marginTop: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.registrationkey.TopMargin}`,
+              position: "absolute"
+
+            }}
+            >{RegNo}</h5>
+      
+
+          <h5 style={{
+            marginLeft: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.securitykey.LeftMargin}`,
+            marginTop: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.securitykey.TopMargin}`,
+            position: "absolute"
           }}
-           >{RegNo}</h3>
-          {imageUrl ? (
-            <a href={imageUrl} download>
-              <img src={imageUrl} alt="img" width="170" height="190"
-              style={{
-                marginLeft: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.qrcode.LeftMargin}`,
-                marginTop: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.qrcode.TopMargin}`
-              }}
-              />
-            </a>
-          ) : null}
+          >{IntinitationFromNo}</h5>
+
+
+          <h5 style={{
+            marginLeft: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.issuedate.LeftMargin}`,
+            marginTop: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.issuedate.TopMargin}`,
+            position: "absolute"
+          }}
+          >24-11-2021</h5>
+
+
+          <h5 style={{
+            marginLeft: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.noteserialno.LeftMargin}`,
+            marginTop: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.noteserialno.TopMargin}`,
+            position: "absolute"
+          }}
+          >{IntinitationFromNo}</h5>
+
         </div>
       </div>
     </>

@@ -46,18 +46,48 @@ export default function QR_Code() {
     <>
     <div className="Booking-Background-CSS">
 
-      <h3 style={{
-            marginLeft: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.registrationkey.LeftMargin}`,
-            marginTop: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.registrationkey.TopMargin}`
-          }}>{RegNo}</h3>
-      <br/>
-        {imageUrl ? (
+    {imageUrl ? (
               <a href={imageUrl} download>
                   <img src={imageUrl} alt="img" style={{
             marginLeft: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.qrcode.LeftMargin}`,
-            marginTop: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.qrcode.TopMargin}`
+            marginTop: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.qrcode.TopMargin}`,
+            position: "absolute"
           }}/>
               </a>) : null}
+
+
+
+      <h3 style={{
+            marginLeft: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.registrationkey.LeftMargin}`,
+            marginTop: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.registrationkey.TopMargin}`,
+            position: "absolute"
+          }}>{RegNo}</h3>
+
+
+<h5 style={{
+            marginLeft: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.securitykey.LeftMargin}`,
+            marginTop: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.securitykey.TopMargin}`,
+            position: "absolute"
+          }}
+          >{BookingFormNo}</h5>
+
+
+          <h5 style={{
+            marginLeft: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.issuedate.LeftMargin}`,
+            marginTop: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.issuedate.TopMargin}`,
+            position: "absolute"
+          }}
+          >24-11-2021</h5>
+
+
+          <h5 style={{
+            marginLeft: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.noteserialno.LeftMargin}`,
+            marginTop: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.noteserialno.TopMargin}`,
+            position: "absolute"
+          }}
+          >{BookingFormNo}</h5>
+
+        
         
     </div>
     </>

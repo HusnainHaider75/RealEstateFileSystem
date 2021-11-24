@@ -22,7 +22,7 @@ export default function UserList() {
   }
 
   function OpenBookingLetter(RegistrationNo , BookingFormSerial){
-    window.open()
+    window.open(`/users/QRCode/RegNo/${RegistrationNo}/BookingFormNo/${BookingFormSerial}`)
   }
 
   function AllUserData(){
@@ -71,11 +71,8 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <>
-            {/* <Link to={`/users/QRCode/RegNo/${params.row.RegistrationNo}/IntinitationNo/${params.row.IntinitationLetterSerial}`}>
-            <span>Link 1</span>
-            </Link>  */}
             <Link onClick={()=>OpenIntimationLetter(params.row.RegistrationNo, params.row.IntinitationLetterSerial)}>
-            <span>A</span>
+            <span>Intimation Letter</span>
             </Link> 
           </>
         );
@@ -90,12 +87,10 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={`/users/QRCode/RegNo/${params.row.RegistrationNo}/BookingFormNo/${params.row.BookingFormSerial}`}>
-            <span>Link 2</span>
-            </Link>  
-            {/* <Link onClick={()=>OpenBookingLetter(params.row.RegistrationNo, params.row.BookingFormSerial)}>
-            <span>B</span>
-            </Link>  */}
+            
+            <Link onClick={()=>OpenBookingLetter(params.row.RegistrationNo, params.row.BookingFormSerial)}>
+            <span>Booking Form</span>
+            </Link> 
           </>
         );
       }

@@ -10,6 +10,7 @@ const UserFilesModel = require("./schema/UserFilesModel");
 const SettingsModel = require("./schema/SettingsModel");
 const multer = require('multer');
 
+app.use(express.static('./public/uploads'));
 
 const storage = multer.diskStorage({
   destination: "./public/uploads/",
@@ -23,7 +24,20 @@ const upload = multer({
 }).single("myImage");
 
 
-app.use(express.static('./public/uploads'));
+
+
+const storagebookingform = multer.diskStorage({
+  destination: "./public/uploads/",
+  filename: function (req, file, cb) {
+      cb(null, "BookingFormBackgroundPicture.jpg");
+  }
+});
+
+const uploadBookingForm = multer({
+  storage: storagebookingform,
+}).single("BookingFormBackgroundPicture");
+
+
 
 //Create New File
 app.post("/createuser", async (req, res) => {
@@ -176,13 +190,14 @@ app.post(`/pagesetting`, upload , async (req, res) => {
 //Upload Image
 
 
-app.post("/upload", upload, (req, res, err)=>{
-  console.log("Request ---", req.body);
-  console.log("Request file ---", req.file);//Here you get file.
-  console.log("Request file ---", req.file.path);
-  
-    /*Now do where ever you want to do*/
-    if(!err)
+app.post("/uploadintimationletter", upload, (req, res, err)=>{
+
+  if(!err)
+       return res.send(200).end();
+})
+app.post("/uploadbookingform", uploadBookingForm, (req, res, err)=>{
+
+  if(!err)
        return res.send(200).end();
 })
 
