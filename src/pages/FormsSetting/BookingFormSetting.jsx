@@ -1,12 +1,13 @@
 import './BookingFormSetting.css'
 import * as React from "react";
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import QRCode from 'qrcode';
 
 
 export default function QR_Code() {
-  
+  const [PageAlignment, SetPageAlignment] = useState([]);
   const { RegNo, BookingFormNo}=useParams();
   const [imageUrl, setImageUrl] = useState('');
   const generateQrCode = async () => {
@@ -20,29 +21,44 @@ export default function QR_Code() {
     }
   }
 
+  const LoadPageSetting = async () => {
+    const PageSettingLoaded = await axios.get(
+      "http://localhost:4000/loadpagesetting"
+    );
+    if (PageSettingLoaded) {
+      let temp =  PageSettingLoaded && PageSettingLoaded.data[0] && PageSettingLoaded.data[0].PageSettingString
+      SetPageAlignment(JSON.parse(temp));
+    } else {
+      alert("Error!");
+    }
+  };
+
   useEffect(() => {
+    LoadPageSetting();
     generateQrCode();
-  }, [])
+  }, []);
+
+
 
 
 
   return (
     <>
     <div className="Booking-Background-CSS">
-      <h2>Registartion Number :</h2>
 
-
-      {/* <span>{RegNo}</span>
+      <h3 style={{
+            marginLeft: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.registrationkey.LeftMargin}`,
+            marginTop: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.registrationkey.TopMargin}`
+          }}>{RegNo}</h3>
       <br/>
-      <h2>Booking Number :</h2>
-      <span>{BookingFormNo}</span>
-      <br/>
-       <h1>QR Code</h1>
         {imageUrl ? (
               <a href={imageUrl} download>
-                  <img src={imageUrl} alt="img"/>
+                  <img src={imageUrl} alt="img" style={{
+            marginLeft: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.qrcode.LeftMargin}`,
+            marginTop: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.qrcode.TopMargin}`
+          }}/>
               </a>) : null}
-         */}
+        
     </div>
     </>
   );

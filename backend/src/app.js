@@ -9,8 +9,21 @@ require("./connection/dbCon");
 const UserFilesModel = require("./schema/UserFilesModel");
 const SettingsModel = require("./schema/SettingsModel");
 const multer = require('multer');
-const path = require("path");
 
+
+const storage = multer.diskStorage({
+  destination: "./public/uploads/",
+  filename: function (req, file, cb) {
+      cb(null, "IntimationBackgroundPicture.jpg");
+  }
+});
+
+const upload = multer({
+  storage: storage,
+}).single("myImage");
+
+
+app.use(express.static('./public/uploads'));
 
 //Create New File
 app.post("/createuser", async (req, res) => {
@@ -118,10 +131,10 @@ app.get(`/loadpagesetting`, async (req, res) => {
 
 
 //Change Values for fixing page Alignment (For QRCode)
-app.post(`/pagesetting`, async (req, res) => {
+app.post(`/pagesetting`, upload , async (req, res) => {
 
+  console.log(req.body);
   let SettingString = JSON.stringify(req.body);
-
   let size = 0;
   const PageSettingExist = await SettingsModel.find();
   PageSettingExist.map(() => {
@@ -162,9 +175,18 @@ app.post(`/pagesetting`, async (req, res) => {
 
 //Upload Image
 
-app.use('uploadimage', async (req, res) => {
 
+app.post("/upload", upload, (req, res, err)=>{
+  console.log("Request ---", req.body);
+  console.log("Request file ---", req.file);//Here you get file.
+  console.log("Request file ---", req.file.path);
+  
+    /*Now do where ever you want to do*/
+    if(!err)
+       return res.send(200).end();
 })
+
+
 
 
 

@@ -40,11 +40,13 @@ form {
   padding: 20px;
   }
   form {
-  width: 100%;
+  width: 60%;
   padding: 20px;
   border-radius: 6px;
   background: #fff;
   box-shadow: 0 0 8px #006622; 
+  margin-left: 140px;
+    margin-top: 100px;
   }
   .banner {
   position: relative;
@@ -168,7 +170,7 @@ form {
   text-align: center;
   }
   button {
-  width: 150px;
+  width: 70px;
   padding: 10px;
   border: none;
   border-radius: 5px; 
@@ -218,4 +220,14 @@ form {
 .updateBoxStyle{
   margin-left: 250px;
   margin-top: 150px;
+}
+.userUpdateButton{
+  border-radius: 5px;
+  border: none;
+  margin-left: 150px;
+  padding: 5px;
+  cursor: pointer;
+  background-color: rgb(77, 77, 221);
+  color: white;
+  font-weight: 600;
 }

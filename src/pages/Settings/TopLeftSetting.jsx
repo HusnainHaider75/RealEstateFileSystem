@@ -1,13 +1,39 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import { Publish } from "@material-ui/icons";
 import { useHistory } from "react-router";
 import axios from "axios";
+import { useState } from "react";
 import "./TopLeftSetting.css";
 
 export default function TopLeftSetting() {
-  const redirect = useHistory();
 
+
+  const [state, setstate] = useState({
+    file: ""
+  })
+
+  function onFormSubmit(e) {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('myImage', state.file);
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    };
+    axios.post("http://localhost:4000/upload", formData, config)
+      .then((res) => {
+        alert("The file is successfully uploaded");
+      }).catch((error) => {
+        alert(error)
+      });
+  }
+  function ImageInput(e) {
+    setstate({ file: e.target.files[0] });
+  }
+
+
+  const redirect = useHistory();
   const SettingOfPage = {
 
     intimationletter: {
@@ -45,14 +71,8 @@ export default function TopLeftSetting() {
 
   let name, value;
   function HandleInputs(e, filename, key) {
-
-    if (e.target.files) {
-      let file = e.target.fies[0];
-      console.log(file)
-    }
     name = e.target.name;
     value = e.target.value;
-    console.log(e.target.file)
     SettingOfPage[filename][key][name] = value;
     console.log(SettingOfPage);
   }
@@ -60,17 +80,12 @@ export default function TopLeftSetting() {
   const SubmitPageSetting = async () => {
     console.log(SettingOfPage)
     const result = await axios.post("http://localhost:4000/pagesetting", SettingOfPage);
-    if (result.data) {
-      redirect.push(`/users`);
-    } else {
-      redirect.push(`/users`);
-    }
+    // if (result.data) {
+    //   redirect.push(`/users`);
+    // } else {
+    //   redirect.push(`/users`);
+    // }
   };
-
-  const FileEventHanlder = async (e) => {
-    console.log(e.target.files[0])
-  }
-
 
 
 
@@ -78,7 +93,6 @@ export default function TopLeftSetting() {
 
 
     <div className="SettingPage">
-
       <Grid item xs={12}>
         <div className="user">
           <div className="DisplayForm">
@@ -251,12 +265,15 @@ export default function TopLeftSetting() {
             </div>
 
             <Grid item xs={6}>
-            <div className="updateBoxStyle">
-                <br />
-                <br />
-                <input type="file" name="file" onChange={(e) => FileEventHanlder(e)} />
-                <button className="userUpdateButton" onClick={() => SubmitPageSetting()}>Update</button>
+              <div >
+                <form onSubmit={onFormSubmit}>
+                  <div className="intimationletteruploadfile">
+                    <input type="file" name="BackgroundImage" onChange={ImageInput} />
+                    <button type="submit">Upload</button>
+                  </div>
+                </form>
               </div>
+              <button className="userUpdateButton" onClick={() => SubmitPageSetting()}>Update</button>
             </Grid>
 
           </div>
@@ -432,16 +449,12 @@ export default function TopLeftSetting() {
 
               <br /><br />
             </div>
-
-            <Grid item xs={6}>
-              <div className="updateBoxStyle">
-                <br />
-                <br />
-                <input type="file" name="file" onChange={(e) => FileEventHanlder(e)} />
-                <button className="userUpdateButton" onClick={() => SubmitPageSetting()}>Update</button>
-              </div>
+            <Grid>
+            <form onSubmit={onFormSubmit}>
+              <input type="file" name="BackgroundImage" onChange={ImageInput} />
+              <button type="submit">Upload</button>
+            </form>
             </Grid>
-
           </div>
 
         </div>
