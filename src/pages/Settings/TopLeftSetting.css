@@ -1,5 +1,4 @@
 .SettingPage{
-    
   flex:7;
   padding-right: 144px;
 }
@@ -170,7 +169,7 @@ form {
   text-align: center;
   }
   button {
-  width: 70px;
+  width: 110px;
   padding: 10px;
   border: none;
   border-radius: 5px; 
@@ -230,4 +229,9 @@ form {
   background-color: rgb(77, 77, 221);
   color: white;
   font-weight: 600;
+}
+.SettingLoader{
+  margin-left: 415px;
+  margin-right: 400px;
+  margin-top: 275px;
 }

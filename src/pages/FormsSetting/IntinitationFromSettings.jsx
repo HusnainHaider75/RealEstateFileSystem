@@ -4,10 +4,22 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import QRCode from "qrcode";
 import axios from "axios";
+import ClipLoader from "react-spinners/ClipLoader";
 export default function QR_Code() {
-  const { RegNo, IntinitationFromNo } = useParams();
+  const { RegNo, IntinitationFromNo, IssueDate } = useParams();
   const [imageUrl, setImageUrl] = useState("");
   const [PageAlignment, SetPageAlignment] = useState([]);
+
+
+  const [Loading, SetLoading] = useState(false);
+
+  useEffect(() => {
+    SetLoading(true);
+    setTimeout(() => {
+      SetLoading(false);
+    }, 2000);
+  }, [])
+
 
   const generateQrCode = async () => {
     try {
@@ -41,53 +53,69 @@ export default function QR_Code() {
 
   return (
     <>
-      <div className="Intimation-Background-CSS" >
-        <div >
-            {imageUrl ? (
-              <a href={imageUrl} download>
-                <img src={imageUrl} alt="img" width="120" height="130"
-                  style={{
-                    marginLeft: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.qrcode.LeftMargin}`,
-                    marginTop: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.qrcode.TopMargin}`,
+      <div className="IntimationLetter">
+        {
+          Loading
+            ?
+            <div className="UserLoader">
+              <ClipLoader color={"#123abc"} loading={Loading} size={50} marginLeft={500} />
+            </div>
+            :
+            <>
+              <div style={{ marginLeft: "110px", marginTop: "20px"  }} >
+                <img src="http://localhost:4000/IntimationBackgroundPicture.jpg" style={{ width: "550px", position:"absolute" }} />
+                <div >
+                  {imageUrl ? (
+                    <a href={imageUrl} download>
+                      <img src={imageUrl} alt="img" width="120" height="130"
+                        style={{
+                          marginLeft: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.qrcode.LeftMargin}`,
+                          marginTop: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.qrcode.TopMargin}`,
+                          position: "absolute"
+                        }}
+                      />
+                    </a>
+                  ) : null}
+
+                  <h5 style={{
+                    marginLeft: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.registrationkey.LeftMargin}`,
+                    marginTop: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.registrationkey.TopMargin}`,
+                    position: "absolute"
+
+                  }}
+                  >{RegNo}</h5>
+
+
+                  <h5 style={{
+                    marginLeft: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.securitykey.LeftMargin}`,
+                    marginTop: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.securitykey.TopMargin}`,
                     position: "absolute"
                   }}
-                />
-              </a>
-            ) : null}
-
-            <h5 style={{
-              marginLeft: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.registrationkey.LeftMargin}`,
-              marginTop: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.registrationkey.TopMargin}`,
-              position: "absolute"
-
-            }}
-            >{RegNo}</h5>
-      
-
-          <h5 style={{
-            marginLeft: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.securitykey.LeftMargin}`,
-            marginTop: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.securitykey.TopMargin}`,
-            position: "absolute"
-          }}
-          >{IntinitationFromNo}</h5>
+                  >{IntinitationFromNo}</h5>
 
 
-          <h5 style={{
-            marginLeft: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.issuedate.LeftMargin}`,
-            marginTop: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.issuedate.TopMargin}`,
-            position: "absolute"
-          }}
-          >24-11-2021</h5>
+                  <h5 style={{
+                    marginLeft: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.issuedate.LeftMargin}`,
+                    marginTop: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.issuedate.TopMargin}`,
+                    position: "absolute"
+                  }}
+                  >{IssueDate}</h5>
 
 
-          <h5 style={{
-            marginLeft: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.noteserialno.LeftMargin}`,
-            marginTop: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.noteserialno.TopMargin}`,
-            position: "absolute"
-          }}
-          >{IntinitationFromNo}</h5>
+                  <h5 style={{
+                    marginLeft: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.noteserialno.LeftMargin}`,
+                    marginTop: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.noteserialno.TopMargin}`,
+                    position: "absolute"
+                  }}
+                  >{IntinitationFromNo}</h5>
 
-        </div>
+                </div>
+              </div>
+
+
+            </>
+        }
+
       </div>
     </>
   );

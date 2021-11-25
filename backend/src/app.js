@@ -41,12 +41,14 @@ const uploadBookingForm = multer({
 
 //Create New File
 app.post("/createuser", async (req, res) => {
+  console.log(req.body);
   const {
     RegistrationNo,
     IntinitationLetterSerial,
     BookingFormSerial,
     CreatedBy,
     Detail,
+    IssueDate
   } = req.body;
   const obj = new UserFilesModel({
     RegistrationNo,
@@ -55,6 +57,7 @@ app.post("/createuser", async (req, res) => {
     CreatedBy,
     Status: true,
     Detail,
+    IssueDate
   });
   const UserCreated = await obj.save();
   try {

@@ -14,7 +14,7 @@ export default function Topbar() {
     <div className="topbar">
       <div className="topbarWrapper">
         <div className="topLeft">
-          <span className="logo">Demo</span>
+          <span className="logo">Royal Garden City</span>
         </div>
         <div className="topRight">
         <div class="wrapper">

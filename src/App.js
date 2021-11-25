@@ -14,7 +14,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import IntinitationFrom_QR_Code from "./pages/FormsSetting/IntinitationFromSettings";
 import BookingForm_QR_Code from "./pages/FormsSetting/BookingFormSetting";
 import TopLeftSetting from './pages/Settings/TopLeftSetting';
-
+import Temp from "./temp"
 function App() {
   const{ isAuthenticated }=useAuth0();
   return (
@@ -24,9 +24,9 @@ function App() {
       { isAuthenticated ? <Topbar/> : ""}
       <div className="container"> 
       { isAuthenticated ? <Sidebar/> : "" }
-       
         <Switch>
           <Route exact path="/" component={Login}/>
+          <Route exact path="/temp" component={Temp}/>
           <Route exact path="/home" component={Home}/>
           <Route exact path="/users" component={UserList}/> 
           <Route exact path="/user/:id" component={User}/> 
@@ -34,9 +34,10 @@ function App() {
           <Route exact path="/products" component={ProductList}/> 
           <Route exact path="/product/:productId" component={Product}/>
           <Route exact path="/newproduct" component={NewProduct}/> 
-          <Route exact path="/users/QrCode/RegNo/:RegNo/IntinitationNo/:IntinitationFromNo" component={IntinitationFrom_QR_Code}/> 
-          <Route exact path="/users/QrCode/RegNo/:RegNo/BookingFormNo/:BookingFormNo" component={BookingForm_QR_Code}/> 
-          <Route exact path="/settings" component={TopLeftSetting}/> 
+          <Route exact path="/settings" component={TopLeftSetting}/>
+          <Route exact path="/users/QrCode/RegNo/:RegNo/IntinitationNo/:IntinitationFromNo/IssueDate/:IssueDate" component={IntinitationFrom_QR_Code}/> 
+          <Route exact path="/users/QrCode/RegNo/:RegNo/BookingFormNo/:BookingFormNo/IssueDate/:IssueDate" component={BookingForm_QR_Code}/> 
+           
         </Switch>
       </div>
     </Router>

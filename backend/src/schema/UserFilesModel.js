@@ -5,7 +5,8 @@ const DataModel = mongoose.Schema({
     BookingFormSerial: String,
     CreatedBy : String,
     Status: Boolean,
-    Detail: String
+    Detail: String,
+    IssueDate: String
 });
 const DataSample =mongoose.model('UserFiles', DataModel);
 module.exports =DataSample;

@@ -1,0 +1,96 @@
+.PageSettingWrapper{
+    margin: 40px;
+}
+.IntimationLetterLable{
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.QrCodeHeading{
+    flex-direction: row;
+    margin-left: 59px;
+    
+}
+.QrCodeInput1{
+    margin-left: 215px;
+    width: 72px;
+    margin-top: 10px;
+}
+.QrCodeInput2{
+    width: 70px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+
+.RegNoHeading{
+    flex-direction: row;
+    margin-left: 59px;
+    
+}
+.RegNoInput1{
+    margin-left: 172px;
+    width: 72px;
+}
+.RegNoInput2{
+    width: 70px;
+    margin-left: 10px;
+}
+
+
+.SecurityKeyHeading{
+    flex-direction: row;
+    margin-left: 59px;
+    
+}
+.SecurityKeyInput1{
+    margin-left: 194px;
+    width: 72px;
+}
+.SecurityKeyInput2{
+    width: 70px;
+    margin-left: 10px;
+}
+
+
+.NoteSerialNoHeading{
+    flex-direction: row;
+    margin-left: 59px;
+    
+}
+.NoteSerialNoInput1{
+    margin-left: 181px;
+    width: 72px;
+}
+.NoteSerialNoInput2{
+    width: 70px;
+    margin-left: 10px;
+}
+
+
+.IssueDateHeading{
+    flex-direction: row;
+    margin-left: 59px;
+    
+}
+.IssueDateInput1{
+    margin-left: 199px;
+    width: 72px;
+}
+.IssueDateInput2{
+    width: 70px;
+    margin-left: 10px;
+}
+.TopMargin{
+    flex-direction: row;
+    margin-left: 15px;
+   
+    font-size: 12px;
+    font-weight: bold;
+}
+.LeftMargin{
+    flex-direction: row;
+    margin-left: 331px;
+    
+    font-size: 12px;
+    font-weight: bold;
+}

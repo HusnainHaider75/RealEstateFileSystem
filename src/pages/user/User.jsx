@@ -5,7 +5,6 @@ import "./user.css";
 import { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router";
 import axios from "axios";
-
 export default function User() {
   const {id}= useParams();
   const redirect =useHistory();

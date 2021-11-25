@@ -7,7 +7,7 @@ export default function NewUser() {
   const redirect =useHistory();
   const LoggedInUser = JSON.parse(localStorage.getItem("auth0spajs"));
   const [User, SetUser] = useState({ RegistrationNo:"", IntinitationLetterSerial:"", 
-  BookingFormSerial:"", CreatedBy:`${LoggedInUser.email}`, Detail:""});
+  BookingFormSerial:"", CreatedBy:`${LoggedInUser.email}`, Detail:"", IssueDate:""});
 
   let name, value;
   function HandleInputs(e){
@@ -18,6 +18,8 @@ export default function NewUser() {
 
   
   async function SubmitUser(){
+    let today = new Date();
+    User.IssueDate =  today.getDate() + "-" + (today.getMonth()+1) + "-" + today.getFullYear();
     const result = await axios.post('http://localhost:4000/createuser', User);
     if (result.data) {
       redirect.push(`/users`)
