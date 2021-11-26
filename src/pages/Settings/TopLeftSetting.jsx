@@ -174,7 +174,6 @@ export default function TopLeftSetting() {
                             className="userUpdateInput"
                             name="LeftMargin"
                             onChange={(e) => HandleInputs(e, "intimationletter", "registrationkey")}
-
                           />
                         </div>
                         <div className="userUpdateItem">

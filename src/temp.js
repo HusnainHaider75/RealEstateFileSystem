@@ -20,7 +20,7 @@ function temp() {
 
                 <Grid container spacing={1} >
 
-                    <Grid item xs={6} >
+                    <Grid item xs={4} >
                         <Item>
                             <h3 className="IntimationLetterLable">Intimation Letter</h3>
                             <Box>
@@ -59,7 +59,7 @@ function temp() {
                     </Grid>
 
 
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                         <Item>
                             <h3 className="IntimationLetterLable">Booking Form</h3>
                             <Box>
