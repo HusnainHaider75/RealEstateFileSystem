@@ -5,11 +5,15 @@ import { useParams } from "react-router";
 import QRCode from "qrcode";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
-export default function QR_Code() {
+
+
+
+export default function QR_Code(props) {
   const { RegNo, IntinitationFromNo, IssueDate } = useParams();
   const [imageUrl, setImageUrl] = useState("");
   const [PageAlignment, SetPageAlignment] = useState([]);
 
+  props.NewState(false);
 
   const [Loading, SetLoading] = useState(false);
 

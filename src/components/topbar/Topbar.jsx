@@ -2,7 +2,7 @@ import React from "react";
 import { NotificationsNone, Language, Settings } from "@material-ui/icons";
 import { useAuth0 } from "@auth0/auth0-react";
 
-export default function Topbar() {
+export default function Topbar(props) {
   const { logout } = useAuth0();
 
   function Logout(){

@@ -15,90 +15,83 @@ const Item = styled(Paper)(({ theme }) => ({
 function temp() {
     return (
         <>
-
-            <Box className="PageSettingWrapper" sx={{ flexGrow: 1 }} >
-
                 <Grid container spacing={1} >
 
                     <Grid item xs={6} >
-                        <Item>
+                     <Item>
                             <h3 className="IntimationLetterLable">Intimation Letter</h3>
-                            <Box>
+                            <Grid xs={6} spacing={2}>
+                            
+                                <Grid item xs={10}>
+                                
                                 <label className="LeftMargin">Left Margin</label>
                                 <label className="TopMargin">Top Margin</label>
-                            </Box>
-                            <Box>
+                                
+                                </Grid>
+                                <Grid xs={12}>
                                 <label className="QrCodeHeading">QR Code</label>
                                 <input className="QrCodeInput1" type="text" />
                                 <input className="QrCodeInput2" type="text" />
-                            </Box>
-                            <Box>
+                                </Grid>
                                 <label className="RegNoHeading">Registration No.</label>
                                 <input className="RegNoInput1" type="text" />
                                 <input className="RegNoInput2" type="text" />
-                            </Box>
-                            <Box>
+                            
                                 <label className="SecurityKeyHeading">Security Key</label>
                                 <input className="SecurityKeyInput1" type="text" />
                                 <input className="SecurityKeyInput2" type="text" />
-                            </Box>
-                            <Box>
+                            
                                 <label className="NoteSerialNoHeading">Note Serial No</label>
                                 <input className="NoteSerialNoInput1" type="text" />
                                 <input className="NoteSerialNoInput2" type="text" />
-                            </Box>
-                            <Box>
+                            
                                 <label className="IssueDateHeading">Issued Date</label>
                                 <input className="IssueDateInput1" type="text" />
                                 <input className="IssueDateInput2" type="text" />
-                            </Box>
+                            
+                            </Grid>
 
                             <br />
-                            
-                        </Item>
+                            </Item>
                     </Grid>
 
 
                     <Grid item xs={6}>
                         <Item>
                             <h3 className="IntimationLetterLable">Booking Form</h3>
-                            <Box>
+                            
                                 <label className="LeftMargin">Left Margin</label>
                                 <label className="TopMargin">Top Margin</label>
-                            </Box>
-                            <Box>
+                            
                                 <label className="QrCodeHeading">QR Code</label>
                                 <input className="QrCodeInput1" type="text" />
                                 <input className="QrCodeInput2" type="text" />
-                            </Box>
-                            <Box>
+                            
                                 <label className="RegNoHeading">Registration No.</label>
                                 <input className="RegNoInput1" type="text" />
                                 <input className="RegNoInput2" type="text" />
-                            </Box>
-                            <Box>
+                            
                                 <label className="SecurityKeyHeading">Security Key</label>
                                 <input className="SecurityKeyInput1" type="text" />
                                 <input className="SecurityKeyInput2" type="text" />
-                            </Box>
-                            <Box>
+                           
                                 <label className="NoteSerialNoHeading">Note Serial No</label>
                                 <input className="NoteSerialNoInput1" type="text" />
                                 <input className="NoteSerialNoInput2" type="text" />
-                            </Box>
-                            <Box>
+                           
                                 <label className="IssueDateHeading">Issued Date</label>
                                 <input className="IssueDateInput1" type="text" />
                                 <input className="IssueDateInput2" type="text" />
-                            </Box>
+                           
 
                             <br />
                             
                         </Item>
+                        
                     </Grid>
+                    
                 </Grid>
-
-            </Box>
+      
 
         </>
     )

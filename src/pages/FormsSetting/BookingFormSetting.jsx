@@ -7,11 +7,13 @@ import QRCode from 'qrcode';
 import ClipLoader from "react-spinners/ClipLoader";
 
 
-export default function QR_Code() {
+export default function QR_Code(props) {
   const [PageAlignment, SetPageAlignment] = useState([]);
   const { RegNo, BookingFormNo, IssueDate } = useParams();
   const [imageUrl, setImageUrl] = useState('');
 
+  props.NewState(false);
+  
   const [Loading, SetLoading] = useState(false);
 
   useEffect(() => {
