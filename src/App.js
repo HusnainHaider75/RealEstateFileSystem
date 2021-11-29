@@ -24,9 +24,9 @@ function App() {
   
     <>
     <Router> 
-      { isAuthenticated && State ? <Topbar/> : ""}
+      { isAuthenticated && State===true ? <Topbar/> : ""}
       <div className="container"> 
-      { isAuthenticated && State ? <Sidebar/> : "" }
+      { isAuthenticated && State===true ? <Sidebar/> : "" }
         <Switch>
           <Route exact path="/" component={Login}/>
           <Route exact path="/grid" component={GridCheck}/>
@@ -41,7 +41,6 @@ function App() {
           <Route exact path="/settings" component={TopLeftSetting}/>
           <Route exact path="/users/QrCode/RegNo/:RegNo/IntinitationNo/:IntinitationFromNo/IssueDate/:IssueDate"> <IntinitationFrom_QR_Code NewState={SetState} /></Route>
           <Route exact path="/users/QrCode/RegNo/:RegNo/BookingFormNo/:BookingFormNo/IssueDate/:IssueDate"> <BookingForm_QR_Code NewState={SetState}/></Route>
-
         </Switch>
       </div>
     </Router>
