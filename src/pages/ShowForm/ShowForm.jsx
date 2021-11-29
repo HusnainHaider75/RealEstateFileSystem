@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import { useParams } from 'react-router';
-
+import { useHistory } from 'react-router';
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     padding: theme.spacing(1),
@@ -14,15 +14,16 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 
-
 function ShowForm(props) {
 
     props.NewState(false);
 
-    const { RegNo } = useParams();
 
-    const [Info, SetInfo] = useState({
-        securitykey: "", registrationno: `${RegNo}`
+    const redirect = useHistory();
+    const { RegNo, type } = useParams();
+
+    const [Details, SetDetails] = useState({
+        securitykey: ``, registrationno: `DDTYJN4567J`
     })
     const [Data, SetData] = useState([]);
 
@@ -30,14 +31,14 @@ function ShowForm(props) {
     function HandleInputs(e) {
         name = e.target.name;
         value = e.target.value;
-        SetInfo({ ...Info, [name]: value });
-        console.log(Info)
+        SetDetails({ ...Details, [name]: value });
+        console.log(Details)
     }
 
     const FetchData = async () => {
-        const result = await axios.get("http://localhost:4000/formdata", Info);
+        const result = await axios.post("http://localhost:4000/formdata", Details);
         if (result.data) {
-            alert(true);
+            redirect.push('/')
         } else {
             alert(false);
         }

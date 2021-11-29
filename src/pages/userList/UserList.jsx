@@ -25,14 +25,15 @@ export default function UserList() {
     }, 2000);
   }, [])
 
-  function OpenIntimationLetter(RegistrationNo, IntinitationLetterSerial, IssueDate) {
-
-    window.open(`/QRCode/RegNo/${RegistrationNo}/IntinitationNo/${IntinitationLetterSerial}/IssueDate/${IssueDate}`);
+  function OpenIntimationLetter(RegistrationNo) {
+    const type= "intimation";
+    window.open(`/intimationQRCode/registration/${RegistrationNo}/type=/${type}`);
 
   }
 
-  function OpenBookingLetter(RegistrationNo, BookingFormSerial, IssueDate) {
-    window.open(`/QRCode/RegNo/${RegistrationNo}/BookingFormNo/${BookingFormSerial}/IssueDate/${IssueDate}`)
+  function OpenBookingLetter(RegistrationNo) {
+    const type= "booking";
+    window.open(`/bookingQRCode/registration/${RegistrationNo}/type=/${type}`)
   }
 
   function AllUserData() {
@@ -55,7 +56,7 @@ export default function UserList() {
     message.error("Delete Record Cancelled!")
   }
   async function UpdateUser(id) {
-    redirect.push(`/user/${id}`);
+    redirect.push(`/file/${id}`);
   }
 
   const columns = [
@@ -161,7 +162,7 @@ export default function UserList() {
             </div>
             :
             <>
-              <Link to={"/newUser"}>
+              <Link to={"/newfile"}>
                 <ImFolderPlus size={30} className="userListAdd"></ImFolderPlus>
               </Link>
               <DataGrid rows={rows} columns={columns} />

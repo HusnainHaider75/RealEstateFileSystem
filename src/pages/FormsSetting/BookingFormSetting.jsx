@@ -9,7 +9,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 export default function QR_Code(props) {
   const [PageAlignment, SetPageAlignment] = useState([]);
-  const { RegNo, BookingFormNo, IssueDate } = useParams();
+  const { RegNo } = useParams();
   const [imageUrl, setImageUrl] = useState('');
 
   props.NewState(false);
@@ -25,15 +25,31 @@ export default function QR_Code(props) {
 
 
   const generateQrCode = async () => {
+    let type= "booking";
     try {
-      const ResultedCode = await QRCode.toDataURL(`http://localhost:3000/QRCode/RegNo/${RegNo}/type=intimation`);
+      const ResultedCode = await QRCode.toDataURL(`http://localhost:3000/bookingQRCode/RegNo/${RegNo}/type/${type}`);
       setImageUrl(ResultedCode);
-     // console.log(imageUrl);
 
     } catch (error) {
       console.log(error);
     }
   }
+
+
+  
+  const [FileData, SetFileData] = useState([]);
+
+  const LoadFileDetail = async (RegNo) => {
+
+    const result = await axios.get(
+      `http://localhost:4000/loadfiledata/${RegNo}`
+    );
+    if (result) {
+      SetFileData(result && result.data && result.data);
+    } else {
+      alert("Error!");
+    }
+  };
 
   const LoadPageSetting = async () => {
     const PageSettingLoaded = await axios.get(
@@ -48,8 +64,10 @@ export default function QR_Code(props) {
   };
 
   useEffect(() => {
-    LoadPageSetting();
     generateQrCode();
+    LoadPageSetting();
+    LoadFileDetail(RegNo);
+    
   }, []);
 
 
@@ -67,7 +85,7 @@ export default function QR_Code(props) {
             </div>
             :
             <div style={{ marginLeft: "110px", marginTop: "20px" }}>
-              <img src="http://localhost:4000/BookingFormBackgroundPicture.jpg" style={{ width: "550px", position: "absolute" }} />
+              <img src="http://localhost:4000/BookingFormBackgroundPicture.jpg" alt='' style={{ width: "550px", position: "absolute" }} />
 
               {imageUrl ? (
                 <a href={imageUrl} download>
@@ -93,7 +111,7 @@ export default function QR_Code(props) {
                 marginTop: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.securitykey.TopMargin}`,
                 position: "absolute"
               }}
-              >{BookingFormNo}</h5>
+              >{FileData && FileData.BookingFormSerial}</h5>
 
 
               <h5 style={{
@@ -101,14 +119,14 @@ export default function QR_Code(props) {
                 marginTop: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.issuedate.TopMargin}`,
                 position: "absolute"
               }}
-              >{IssueDate}</h5>
+              >{FileData && FileData.IssueDate}</h5>
 
               <h5 style={{
                 marginLeft: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.noteserialno.LeftMargin}`,
                 marginTop: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.noteserialno.TopMargin}`,
                 position: "absolute"
               }}
-              >{BookingFormNo}</h5>
+              >{FileData && FileData.BookingFormSerial}</h5>
             </div>
         }
 

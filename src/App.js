@@ -17,7 +17,6 @@ import BookingForm from "./pages/FormsSetting/BookingFormSetting";
 import TopLeftSetting from './pages/Settings/TopLeftSetting';
 import  ShowForm from './pages/ShowForm/ShowForm';
 import GridCheck from './GridCheck';
-import Temp from "./temp"
 function App() {
   const{ isAuthenticated }=useAuth0();
   const [State, SetState] = useState(true)
@@ -31,18 +30,17 @@ function App() {
         <Switch>
           <Route exact path="/" component={Login}/>
           <Route exact path="/grid" component={GridCheck}/>
-          <Route exact path="/temp" component={Temp}/>
           <Route exact path="/home" component={Home}/>
-          <Route exact path="/users" component={UserList}/> 
-          <Route exact path="/user/:id" component={User}/> 
-          <Route exact path="/newUser" component={NewUser}/> 
+          <Route exact path="/files" component={UserList}/> 
+          <Route exact path="/file/:id" component={User}/> 
+          <Route exact path="/newfile" component={NewUser}/> 
           <Route exact path="/products" component={ProductList}/> 
           <Route exact path="/product/:productId" component={Product}/>
           <Route exact path="/newproduct" component={NewProduct}/> 
           <Route exact path="/settings" component={GridCheck}/>
           <Route exact path="/showform"> <ShowForm NewState={SetState}/></Route>
-          <Route exact path="/QrCode/RegNo/:RegNo/IntinitationNo/:IntinitationFromNo/IssueDate/:IssueDate"> <IntinitationLetter NewState={SetState} /></Route>
-          <Route exact path="/QrCode/RegNo/:RegNo/BookingFormNo/:BookingFormNo/IssueDate/:IssueDate"> <BookingForm NewState={SetState}/></Route>
+          <Route exact path="/intimationQrCode/registration/:RegNo/type=/:type"> <IntinitationLetter NewState={SetState} /></Route>
+          <Route exact path="/bookingQrCode/registration/:RegNo/type=/:type"> <BookingForm NewState={SetState}/></Route>
         </Switch>
       </div>
     </Router>

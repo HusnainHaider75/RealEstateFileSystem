@@ -23,9 +23,6 @@ const upload = multer({
   storage: storage,
 }).single("myImage");
 
-
-
-
 const storagebookingform = multer.diskStorage({
   destination: "./public/uploads/",
   filename: function (req, file, cb) {
@@ -77,6 +74,7 @@ app.get("/loaduser", async (req, res) => {
   }
 });
 
+//Delete specific data
 app.put(`/deleteuser/:id`, async (req, res) => {
   const DeleteUser = await UserFilesModel.findOneAndUpdate(
     { _id: req.params.id },
@@ -104,6 +102,7 @@ app.get(`/loaduser/:id`, async (req, res) => {
   }
 });
 
+//update specific user
 app.put(`/updateuser/:id`, async (req, res) => {
   const {
     RegistrationNo,
@@ -191,8 +190,6 @@ app.post(`/pagesetting`, upload , async (req, res) => {
 
 
 //Upload Image
-
-
 app.post("/uploadintimationletter", upload, (req, res, err)=>{
 
   if(!err)
@@ -205,7 +202,26 @@ app.post("/uploadbookingform", uploadBookingForm, (req, res, err)=>{
 })
 
 
+//Get Specific User's File Data
+app.post(`/formdata`, async (req, res) => {
+  
+  const UserExist = await UserFilesModel.findOne({ RegistrationNo: req.body.registrationno, IntinitationLetterSerial:  req.body.securitykey });
+  try {
+    UserExist ? res.send(UserExist) : res.send(false);
+  } catch (err){
+    res.send(err);
+  }
+});
 
+//Load One File Data
+app.get(`/loadfiledata/:RegNo`, async (req, res) => {
+  const UserExist = await UserFilesModel.findOne({ RegistrationNo: req.params.RegNo});
+  try {
+    UserExist ? res.send(UserExist) : res.send(false);
+  } catch (err){
+    res.send(err);
+  }
+});
 
 
 
