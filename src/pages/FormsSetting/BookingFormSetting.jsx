@@ -26,9 +26,9 @@ export default function QR_Code(props) {
 
   const generateQrCode = async () => {
     try {
-      const ResultedCode = await QRCode.toDataURL(`Registration=${RegNo} + BookingFormNo= ${BookingFormNo}`);
+      const ResultedCode = await QRCode.toDataURL(`http://localhost:3000/QRCode/RegNo/${RegNo}/type=intimation`);
       setImageUrl(ResultedCode);
-      console.log(imageUrl);
+     // console.log(imageUrl);
 
     } catch (error) {
       console.log(error);
@@ -71,7 +71,8 @@ export default function QR_Code(props) {
 
               {imageUrl ? (
                 <a href={imageUrl} download>
-                  <img src={imageUrl} alt="img" style={{
+                  <img src={imageUrl} alt="img" width="80" height="90"
+                   style={{
                     marginLeft: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.qrcode.LeftMargin}`,
                     marginTop: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.qrcode.TopMargin}`,
                     position: "absolute"
@@ -80,11 +81,11 @@ export default function QR_Code(props) {
 
 
 
-              <h3 style={{
+              <h5 style={{
                 marginLeft: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.registrationkey.LeftMargin}`,
                 marginTop: `${PageAlignment && PageAlignment.bookingform && PageAlignment.bookingform.registrationkey.TopMargin}`,
                 position: "absolute"
-              }}>{RegNo}</h3>
+              }}>{RegNo}</h5>
 
 
               <h5 style={{

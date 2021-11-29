@@ -27,12 +27,12 @@ export default function UserList() {
 
   function OpenIntimationLetter(RegistrationNo, IntinitationLetterSerial, IssueDate) {
 
-    window.open(`/users/QRCode/RegNo/${RegistrationNo}/IntinitationNo/${IntinitationLetterSerial}/IssueDate/${IssueDate}`);
+    window.open(`/QRCode/RegNo/${RegistrationNo}/IntinitationNo/${IntinitationLetterSerial}/IssueDate/${IssueDate}`);
 
   }
 
   function OpenBookingLetter(RegistrationNo, BookingFormSerial, IssueDate) {
-    window.open(`/users/QRCode/RegNo/${RegistrationNo}/BookingFormNo/${BookingFormSerial}/IssueDate/${IssueDate}`)
+    window.open(`/QRCode/RegNo/${RegistrationNo}/BookingFormNo/${BookingFormSerial}/IssueDate/${IssueDate}`)
   }
 
   function AllUserData() {

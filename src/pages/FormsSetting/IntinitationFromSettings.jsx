@@ -9,11 +9,12 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 
 export default function QR_Code(props) {
+
+  props.NewState(false);
+
   const { RegNo, IntinitationFromNo, IssueDate } = useParams();
   const [imageUrl, setImageUrl] = useState("");
   const [PageAlignment, SetPageAlignment] = useState([]);
-
-  props.NewState(false);
 
   const [Loading, SetLoading] = useState(false);
 
@@ -27,11 +28,10 @@ export default function QR_Code(props) {
 
   const generateQrCode = async () => {
     try {
-      const ResultedCode = await QRCode.toDataURL(
-        `Registration=${RegNo} + IntinitationLetterSerial= ${IntinitationFromNo}`
+      const ResultedCode = await QRCode.toDataURL(`http://localhost:3000/QRCode/registration/${RegNo}/type=intimation`
       );
       setImageUrl(ResultedCode);
-      console.log(imageUrl);
+      //console.log(imageUrl);
     } catch (error) {
       console.log(error);
     }
@@ -71,7 +71,7 @@ export default function QR_Code(props) {
                 <div >
                   {imageUrl ? (
                     <a href={imageUrl} download>
-                      <img src={imageUrl} alt="img" width="120" height="130"
+                      <img src={imageUrl} alt="img" width="80" height="90"
                         style={{
                           marginLeft: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.qrcode.LeftMargin}`,
                           marginTop: `${PageAlignment && PageAlignment.intimationletter && PageAlignment.intimationletter.qrcode.TopMargin}`,

@@ -12,9 +12,10 @@ import Login from "./pages/login/login";
 import Topbar from "./components/topbar/Topbar";
 import Sidebar from "./components/sidebar/Sidebar";
 import { useAuth0 } from "@auth0/auth0-react";
-import IntinitationFrom_QR_Code from "./pages/FormsSetting/IntinitationFromSettings";
-import BookingForm_QR_Code from "./pages/FormsSetting/BookingFormSetting";
+import IntinitationLetter from "./pages/FormsSetting/IntinitationFromSettings";
+import BookingForm from "./pages/FormsSetting/BookingFormSetting";
 import TopLeftSetting from './pages/Settings/TopLeftSetting';
+import  ShowForm from './pages/ShowForm/ShowForm';
 import GridCheck from './GridCheck';
 import Temp from "./temp"
 function App() {
@@ -38,9 +39,10 @@ function App() {
           <Route exact path="/products" component={ProductList}/> 
           <Route exact path="/product/:productId" component={Product}/>
           <Route exact path="/newproduct" component={NewProduct}/> 
-          <Route exact path="/settings" component={TopLeftSetting}/>
-          <Route exact path="/users/QrCode/RegNo/:RegNo/IntinitationNo/:IntinitationFromNo/IssueDate/:IssueDate"> <IntinitationFrom_QR_Code NewState={SetState} /></Route>
-          <Route exact path="/users/QrCode/RegNo/:RegNo/BookingFormNo/:BookingFormNo/IssueDate/:IssueDate"> <BookingForm_QR_Code NewState={SetState}/></Route>
+          <Route exact path="/settings" component={GridCheck}/>
+          <Route exact path="/showform"> <ShowForm NewState={SetState}/></Route>
+          <Route exact path="/QrCode/RegNo/:RegNo/IntinitationNo/:IntinitationFromNo/IssueDate/:IssueDate"> <IntinitationLetter NewState={SetState} /></Route>
+          <Route exact path="/QrCode/RegNo/:RegNo/BookingFormNo/:BookingFormNo/IssueDate/:IssueDate"> <BookingForm NewState={SetState}/></Route>
         </Switch>
       </div>
     </Router>
