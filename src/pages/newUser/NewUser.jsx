@@ -6,33 +6,33 @@ import { useHistory } from "react-router";
 export default function NewUser() {
   const redirect =useHistory();
   const LoggedInUser = JSON.parse(localStorage.getItem("auth0spajs"));
-  const [User, SetUser] = useState({ RegistrationNo:"", IntinitationLetterSerial:"", 
+  const [file, Setfile] = useState({ RegistrationNo:"", IntinitationLetterSerial:"", 
   BookingFormSerial:"", CreatedBy:`${LoggedInUser.email}`, Detail:"", IssueDate:""});
 
   let name, value;
   function HandleInputs(e){
         name = e.target.name;
         value = e.target.value;
-        SetUser({ ...User, [name]: value })
+        Setfile({ ...file, [name]: value })
   }
 
   
-  async function SubmitUser(){
+  async function Submitfile(){
     let today = new Date();
-    User.IssueDate =  today.getDate() + "-" + (today.getMonth()+1) + "-" + today.getFullYear();
-    const result = await axios.post('http://localhost:4000/createuser', User);
+    file.IssueDate =  today.getDate() + "-" + (today.getMonth()+1) + "-" + today.getFullYear();
+    const result = await axios.post('http://localhost:4000/createfile', file);
     if (result.data) {
-      redirect.push(`/users`)
+      redirect.push(`/files`)
     }
     else {
-        redirect.push(`/newUser`)
+        redirect.push(`/newfile`)
     }
   }
 
 
 
   return (
-    <div className="newUser">
+    <div className="newfile">
 
       <div className="newUserForm">
         <div className="newUserItem">
@@ -53,7 +53,7 @@ export default function NewUser() {
         </div>
         
         </div>
-        <button className="newUserButton" onClick={()=>SubmitUser()}>Create</button>
+        <button className="newUserButton" onClick={()=>Submitfile()}>Create</button>
     </div>
   );
 }

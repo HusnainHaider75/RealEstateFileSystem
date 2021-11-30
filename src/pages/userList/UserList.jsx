@@ -27,13 +27,13 @@ export default function UserList() {
 
   function OpenIntimationLetter(RegistrationNo) {
     const type= "intimation";
-    window.open(`/intimationQRCode/registration/${RegistrationNo}/type=/${type}`);
+    window.open(`/intimationQRCode/registration/${RegistrationNo}/type/${type}`);
 
   }
 
   function OpenBookingLetter(RegistrationNo) {
     const type= "booking";
-    window.open(`/bookingQRCode/registration/${RegistrationNo}/type=/${type}`)
+    window.open(`/bookingQRCode/registration/${RegistrationNo}/type/${type}`)
   }
 
   function AllUserData() {

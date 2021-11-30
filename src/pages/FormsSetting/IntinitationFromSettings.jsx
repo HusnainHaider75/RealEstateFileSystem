@@ -29,7 +29,7 @@ export default function QR_Code(props) {
   const generateQrCode = async () => {
     let type= "intimation";
     try {
-      const ResultedCode = await QRCode.toDataURL(`http://localhost:3000/intimationQRCode/registration/${RegNo}/type/${type}`
+      const ResultedCode = await QRCode.toDataURL(`http://localhost:3000/QRCode/registration/${RegNo}/type/${type}`
       );
       setImageUrl(ResultedCode);
     } catch (error) {

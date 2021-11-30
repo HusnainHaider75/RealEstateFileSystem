@@ -29,6 +29,7 @@ function App() {
       { isAuthenticated && State===true ? <Sidebar/> : "" }
         <Switch>
           <Route exact path="/" component={Login}/>
+          
           <Route exact path="/grid" component={GridCheck}/>
           <Route exact path="/home" component={Home}/>
           <Route exact path="/files" component={UserList}/> 
@@ -38,9 +39,9 @@ function App() {
           <Route exact path="/product/:productId" component={Product}/>
           <Route exact path="/newproduct" component={NewProduct}/> 
           <Route exact path="/settings" component={GridCheck}/>
-          <Route exact path="/showform"> <ShowForm NewState={SetState}/></Route>
-          <Route exact path="/intimationQrCode/registration/:RegNo/type=/:type"> <IntinitationLetter NewState={SetState} /></Route>
-          <Route exact path="/bookingQrCode/registration/:RegNo/type=/:type"> <BookingForm NewState={SetState}/></Route>
+          <Route exact path="/QRCode/registration/:RegNo/type/:type"> <ShowForm NewState={SetState}/></Route>
+          <Route exact path="/intimationQrCode/registration/:RegNo/type/:type"> <IntinitationLetter NewState={SetState} /></Route>
+          <Route exact path="/bookingQrCode/registration/:RegNo/type/:type"> <BookingForm NewState={SetState}/></Route>
         </Switch>
       </div>
     </Router>

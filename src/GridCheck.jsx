@@ -110,7 +110,7 @@ function Temp() {
     function HandleInputs(e, filename, key) {
         name = e.target.name;
         value = e.target.value;
-        SettingOfPage[filename][key][name] = value;
+        SettingOfPage[filename][key][name] = `${value}px`;
         console.log(SettingOfPage);
     }
 
@@ -128,6 +128,7 @@ function Temp() {
 
     return (
         <>
+
 
             <Grid xs={12} container >
 
@@ -162,15 +163,15 @@ function Temp() {
                             </Grid>
                             <Grid item xs={3} >
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="LeftMargin"
                                     onChange={(e) => HandleInputs(e, "intimationletter", "qrcode")}
 
                                 />
                             </Grid>
-                            <Grid item xs={3} >
+                            <Grid item xs={3}>
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="TopMargin"
                                     onChange={(e) => HandleInputs(e, "intimationletter", "qrcode")}
                                 />
@@ -185,14 +186,14 @@ function Temp() {
                             </Grid>
                             <Grid item xs={3} >
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="LeftMargin"
                                     onChange={(e) => HandleInputs(e, "intimationletter", "registrationkey")}
                                 />
                             </Grid>
                             <Grid item xs={3} >
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="TopMargin"
                                     onChange={(e) => HandleInputs(e, "intimationletter", "registrationkey")}
                                 />
@@ -208,14 +209,14 @@ function Temp() {
                             </Grid>
                             <Grid item xs={3} >
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="LeftMargin"
                                     onChange={(e) => HandleInputs(e, "intimationletter", "securitykey")}
                                 />
                             </Grid>
                             <Grid item xs={3} >
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="TopMargin"
                                     onChange={(e) => HandleInputs(e, "intimationletter", "securitykey")}
                                 />
@@ -231,14 +232,14 @@ function Temp() {
                             </Grid>
                             <Grid item xs={3} >
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="LeftMargin"
                                     onChange={(e) => HandleInputs(e, "intimationletter", "noteserialno")}
                                 />
                             </Grid>
                             <Grid item xs={3} >
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="TopMargin"
                                     onChange={(e) => HandleInputs(e, "intimationletter", "noteserialno")}
                                 />
@@ -253,14 +254,14 @@ function Temp() {
                             </Grid>
                             <Grid item xs={3} >
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="LeftMargin"
                                     onChange={(e) => HandleInputs(e, "intimationletter", "issuedate")}
                                 />
                             </Grid>
                             <Grid item xs={3} >
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="TopMargin"
                                     onChange={(e) => HandleInputs(e, "intimationletter", "issuedate")}
                                 />
@@ -313,7 +314,7 @@ function Temp() {
                             </Grid>
                             <Grid item xs={3} >
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="LeftMargin"
                                     onChange={(e) => HandleInputs(e, "bookingform", "qrcode")}
 
@@ -321,7 +322,7 @@ function Temp() {
                             </Grid>
                             <Grid item xs={3} >
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="TopMargin"
                                     onChange={(e) => HandleInputs(e, "bookingform", "qrcode")}
                                 />
@@ -336,7 +337,7 @@ function Temp() {
                             </Grid>
                             <Grid item xs={3} >
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="LeftMargin"
                                     onChange={(e) => HandleInputs(e, "bookingform", "registrationkey")}
 
@@ -344,7 +345,7 @@ function Temp() {
                             </Grid>
                             <Grid item xs={3} >
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="TopMargin"
                                     onChange={(e) => HandleInputs(e, "bookingform", "registrationkey")}
                                 />
@@ -360,14 +361,14 @@ function Temp() {
                             </Grid>
                             <Grid item xs={3} >
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="LeftMargin"
                                     onChange={(e) => HandleInputs(e, "bookingform", "securitykey")}
                                 />
                             </Grid>
                             <Grid item xs={3} >
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="TopMargin"
                                     onChange={(e) => HandleInputs(e, "bookingform", "securitykey")}
                                 />
@@ -383,14 +384,14 @@ function Temp() {
                             </Grid>
                             <Grid item xs={3} >
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="LeftMargin"
                                     onChange={(e) => HandleInputs(e, "bookingform", "noteserialno")}
                                 />
                             </Grid>
                             <Grid item xs={3} >
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="TopMargin"
                                     onChange={(e) => HandleInputs(e, "bookingform", "noteserialno")}
                                 />
@@ -405,14 +406,14 @@ function Temp() {
                             </Grid>
                             <Grid item xs={3} >
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="LeftMargin"
                                     onChange={(e) => HandleInputs(e, "bookingform", "issuedate")}
                                 />
                             </Grid>
                             <Grid item xs={3} >
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="TopMargin"
                                     onChange={(e) => HandleInputs(e, "bookingform", "issuedate")}
                                 />

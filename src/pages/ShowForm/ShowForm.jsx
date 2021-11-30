@@ -23,10 +23,8 @@ function ShowForm(props) {
     const { RegNo, type } = useParams();
 
     const [Details, SetDetails] = useState({
-        securitykey: ``, registrationno: `DDTYJN4567J`
+        securitykey: ``, registrationno: `${RegNo}`, type:`${type}`
     })
-    const [Data, SetData] = useState([]);
-
     let name, value;
     function HandleInputs(e) {
         name = e.target.name;
@@ -37,10 +35,23 @@ function ShowForm(props) {
 
     const FetchData = async () => {
         const result = await axios.post("http://localhost:4000/formdata", Details);
+
         if (result.data) {
-            redirect.push('/')
-        } else {
-            alert(false);
+            if (type === "intimation") {
+                redirect.push(`/intimationQrCode/registration/${RegNo}/type/${type}`)
+            }
+            else 
+            {
+                if (type === "booking") {
+                    redirect.push(`/bookingQrCode/registration/${RegNo}/type/${type}`)
+                }
+                else {
+
+                }
+            }
+        }
+        else {
+            alert(`${type} type Record not exist on this security key!`);
         }
     };
 
@@ -80,7 +91,7 @@ function ShowForm(props) {
                         </Grid>
 
                         <Grid item xs={12} >
-                            <img src={"http://localhost:4000/IntimationBackgroundPicture.jpg"} alt="" style={{ width: "550px" }} />
+                            
                         </Grid>
 
                     </Item>

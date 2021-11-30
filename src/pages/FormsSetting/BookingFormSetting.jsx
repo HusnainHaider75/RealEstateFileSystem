@@ -27,7 +27,7 @@ export default function QR_Code(props) {
   const generateQrCode = async () => {
     let type= "booking";
     try {
-      const ResultedCode = await QRCode.toDataURL(`http://localhost:3000/bookingQRCode/RegNo/${RegNo}/type/${type}`);
+      const ResultedCode = await QRCode.toDataURL(`http://localhost:3000/QRCode/RegNo/${RegNo}/type/${type}`);
       setImageUrl(ResultedCode);
 
     } catch (error) {

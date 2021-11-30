@@ -15,7 +15,7 @@ app.use(express.static('./public/uploads'));
 const storage = multer.diskStorage({
   destination: "./public/uploads/",
   filename: function (req, file, cb) {
-      cb(null, "IntimationBackgroundPicture.jpg");
+    cb(null, "IntimationBackgroundPicture.jpg");
   }
 });
 
@@ -26,7 +26,7 @@ const upload = multer({
 const storagebookingform = multer.diskStorage({
   destination: "./public/uploads/",
   filename: function (req, file, cb) {
-      cb(null, "BookingFormBackgroundPicture.jpg");
+    cb(null, "BookingFormBackgroundPicture.jpg");
   }
 });
 
@@ -37,7 +37,7 @@ const uploadBookingForm = multer({
 
 
 //Create New File
-app.post("/createuser", async (req, res) => {
+app.post("/createfile", async (req, res) => {
   console.log(req.body);
   const {
     RegistrationNo,
@@ -147,7 +147,7 @@ app.get(`/loadpagesetting`, async (req, res) => {
 
 
 //Change Values for fixing page Alignment (For QRCode)
-app.post(`/pagesetting`, upload , async (req, res) => {
+app.post(`/pagesetting`, upload, async (req, res) => {
 
   console.log(req.body);
   let SettingString = JSON.stringify(req.body);
@@ -175,7 +175,7 @@ app.post(`/pagesetting`, upload , async (req, res) => {
 
   else {
     const obj = new SettingsModel({
-      PageSettingString : SettingString
+      PageSettingString: SettingString
     });
 
     const UpdatePageSetting = obj.save();
@@ -190,35 +190,44 @@ app.post(`/pagesetting`, upload , async (req, res) => {
 
 
 //Upload Image
-app.post("/uploadintimationletter", upload, (req, res, err)=>{
+app.post("/uploadintimationletter", upload, (req, res, err) => {
 
-  if(!err)
-       return res.send(200).end();
+  if (!err)
+    return res.send(200).end();
 })
-app.post("/uploadbookingform", uploadBookingForm, (req, res, err)=>{
+app.post("/uploadbookingform", uploadBookingForm, (req, res, err) => {
 
-  if(!err)
-       return res.send(200).end();
+  if (!err)
+    return res.send(200).end();
 })
 
 
 //Get Specific User's File Data
 app.post(`/formdata`, async (req, res) => {
-  
-  const UserExist = await UserFilesModel.findOne({ RegistrationNo: req.body.registrationno, IntinitationLetterSerial:  req.body.securitykey });
-  try {
-    UserExist ? res.send(UserExist) : res.send(false);
-  } catch (err){
-    res.send(err);
+  if (req.body.type === "intimation") {
+    const UserExist = await UserFilesModel.findOne({ RegistrationNo: req.body.registrationno, IntinitationLetterSerial: req.body.securitykey });
+    try {
+      UserExist ? res.send(UserExist) : res.send(false);
+    } catch (err) {
+      res.send(err);
+    }
+  }
+  else {
+    const UserExist = await UserFilesModel.findOne({ RegistrationNo: req.body.registrationno, BookingFormSerial: req.body.securitykey });
+    try {
+      UserExist ? res.send(UserExist) : res.send(false);
+    } catch (err) {
+      res.send(err);
+    }
   }
 });
 
 //Load One File Data
 app.get(`/loadfiledata/:RegNo`, async (req, res) => {
-  const UserExist = await UserFilesModel.findOne({ RegistrationNo: req.params.RegNo});
+  const UserExist = await UserFilesModel.findOne({ RegistrationNo: req.params.RegNo });
   try {
     UserExist ? res.send(UserExist) : res.send(false);
-  } catch (err){
+  } catch (err) {
     res.send(err);
   }
 });
