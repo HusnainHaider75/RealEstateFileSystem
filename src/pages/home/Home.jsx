@@ -6,8 +6,17 @@ import { userData } from "../../dummyData";
 import WidgetSm from "../../components/widgetSm/WidgetSm";
 import WidgetLg from "../../components/widgetLg/WidgetLg";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useHistory } from 'react-router';
+import { useAuth0 } from "@auth0/auth0-react";
+
 export default function Home() {
 
+  const redirect = useHistory();
+
+  const { isAuthenticated } =useAuth0();
+  if(!isAuthenticated){
+    redirect.push("/")
+  }
   const [Loading, SetLoading] = useState(false);
 
   useEffect(() => {

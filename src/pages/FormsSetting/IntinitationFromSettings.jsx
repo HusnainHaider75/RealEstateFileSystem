@@ -6,16 +6,12 @@ import QRCode from "qrcode";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 
-
-
 export default function QR_Code(props) {
-
+  
   props.NewState(false);
-
   const { RegNo, type } = useParams();
   const [imageUrl, setImageUrl] = useState("");
   const [PageAlignment, SetPageAlignment] = useState([]);
-
   const [Loading, SetLoading] = useState(false);
 
   useEffect(() => {
@@ -27,7 +23,6 @@ export default function QR_Code(props) {
 
 
   const generateQrCode = async () => {
-    let type= "intimation";
     try {
       const ResultedCode = await QRCode.toDataURL(`http://localhost:3000/QRCode/registration/${RegNo}/type/${type}`
       );
@@ -68,7 +63,7 @@ export default function QR_Code(props) {
     generateQrCode();
     LoadPageSetting();
     LoadFileDetail(RegNo);
-  }, []);
+  }, [RegNo]);
 
 
   return (
@@ -83,7 +78,7 @@ export default function QR_Code(props) {
             :
             <>
               <div style={{ margin: "30px" }} >
-                <img src="http://localhost:4000/IntimationBackgroundPicture.jpg" style={{ width: "550px", position: "absolute" }} />
+                <img alt='' src="http://localhost:4000/IntimationBackgroundPicture.jpg" style={{ width: "550px", position: "absolute" }} />
                 <div >
                   {imageUrl ? (
                     <a href={imageUrl} download>

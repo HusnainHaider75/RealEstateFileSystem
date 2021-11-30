@@ -1,513 +1,399 @@
-import React from "react";
-import { Grid } from "@material-ui/core";
+
+import React from "react"
+import { useState, useEffect } from "react"
+import { styled } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 import { useHistory } from "react-router";
 import axios from "axios";
-import { useState, useEffect } from "react";
-import "./TopLeftSetting.css";
 import ClipLoader from "react-spinners/ClipLoader";
-export default function TopLeftSetting() {
+import "./TopLeftSetting.css";
 
-  const [Loading, SetLoading] = useState(false);
-
-  useEffect(() => {
-    SetLoading(true);
-    setTimeout(() => {
-      SetLoading(false);
-    }, 2000);
-  }, [])
+const Item = styled(Paper)(({ theme }) => ({
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+}));
 
 
-  const [state, setstate] = useState({
-    file: ""
-  })
+function TopLeftSetting() {
 
-  function onFormSubmit(e) {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('myImage', state.file);
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data'
-      }
-    };
-    axios.post("http://localhost:4000/uploadintimationletter", formData, config)
-      .then((res) => {
-        alert("The file is successfully uploaded");
-      }).catch((error) => {
-        alert(error)
-      });
-  }
-
-  function onFormSubmit1(e) {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('BookingFormBackgroundPicture', state.file);
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data'
-      }
-    };
-    axios.post("http://localhost:4000/uploadbookingform", formData, config)
-      .then((res) => {
-        alert("The file is successfully uploaded");
-      }).catch((error) => {
-        alert(error)
-      });
-  }
-  function ImageInput(e) {
-    setstate({ file: e.target.files[0] });
-  }
-
-
-  const redirect = useHistory();
-  const SettingOfPage = {
-
-    intimationletter: {
-      qrcode:
-        { LeftMargin: "", TopMargin: "" },
-      securitykey:
-        { LeftMargin: "", TopMargin: "" },
-      registrationkey:
-        { LeftMargin: "", TopMargin: "" },
-      noteserialno:
-        { LeftMargin: "", TopMargin: "" },
-      issuedate:
-        { LeftMargin: "", TopMargin: "" },
-      backgroundpicture:
-        { Bg_Image: "" }
-    },
-
-    bookingform: {
-      qrcode:
-        { LeftMargin: "", TopMargin: "" },
-      securitykey:
-        { LeftMargin: "", TopMargin: "" },
-      registrationkey:
-        { LeftMargin: "", TopMargin: "" },
-      noteserialno:
-        { LeftMargin: "", TopMargin: "" },
-      issuedate:
-        { LeftMargin: "", TopMargin: "" },
-      backgroundpicture:
-        { Bg_Image: "" }
+    const redirect = useHistory();
+    if(!localStorage.getItem("auth0spajs")){
+      redirect.push("/")
     }
 
-  };
+    const [Loading, SetLoading] = useState(false);
+
+    useEffect(() => {
+        SetLoading(true);
+        setTimeout(() => {
+            SetLoading(false);
+        }, 2000);
+    }, [])
 
 
-  let name, value;
-  function HandleInputs(e, filename, key) {
-    name = e.target.name;
-    value = e.target.value;
-    SettingOfPage[filename][key][name] = value;
-    console.log(SettingOfPage);
-  }
+    const [state, setstate] = useState({
+        file: ""
+    })
 
-  const SubmitPageSetting = async () => {
-    console.log(SettingOfPage)
-    const result = await axios.post("http://localhost:4000/pagesetting", SettingOfPage);
-    if (result.data) {
-      redirect.push(`/users`);
-    } else {
-      redirect.push(`/users`);
+    function onFormSubmit(e) {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('myImage', state.file);
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        };
+        axios.post("http://localhost:4000/uploadintimationletter", formData, config)
+            .then((res) => {
+                alert("The file is successfully uploaded");
+            }).catch((error) => {
+                alert(error)
+            });
     }
-  };
+
+    function onFormSubmit1(e) {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('BookingFormBackgroundPicture', state.file);
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        };
+        axios.post("http://localhost:4000/uploadbookingform", formData, config)
+            .then((res) => {
+                alert("The file is successfully uploaded");
+            }).catch((error) => {
+                alert(error)
+            });
+    }
+    function ImageInput(e) {
+        setstate({ file: e.target.files[0] });
+    }
+    
+    const SettingOfPage = {
+
+        intimationletter: {
+            qrcode:
+                { LeftMargin: "", TopMargin: "" },
+            securitykey:
+                { LeftMargin: "", TopMargin: "" },
+            registrationkey:
+                { LeftMargin: "", TopMargin: "" },
+            noteserialno:
+                { LeftMargin: "", TopMargin: "" },
+            issuedate:
+                { LeftMargin: "", TopMargin: "" },
+            backgroundpicture:
+                { Bg_Image: "" }
+        },
+
+        bookingform: {
+            qrcode:
+                { LeftMargin: "", TopMargin: "" },
+            securitykey:
+                { LeftMargin: "", TopMargin: "" },
+            registrationkey:
+                { LeftMargin: "", TopMargin: "" },
+            noteserialno:
+                { LeftMargin: "", TopMargin: "" },
+            issuedate:
+                { LeftMargin: "", TopMargin: "" },
+            backgroundpicture:
+                { Bg_Image: "" }
+        }
+
+    };
+
+
+    let name, value;
+    function HandleInputs(e, filename, key) {
+        name = e.target.name;
+        value = e.target.value;
+        SettingOfPage[filename][key][name] = `${value}px`;
+        console.log(SettingOfPage);
+    }
+
+    const SubmitPageSetting = async () => {
+        console.log(SettingOfPage)
+        const result = await axios.post("http://localhost:4000/pagesetting", SettingOfPage);
+        if (result.data) {
+            redirect.push(`/users`);
+        } else {
+            redirect.push(`/users`);
+        }
+    };
 
 
 
-  return (
-
-    <div className="SettingPage">
-      {
-        Loading
+    return (
+        <div className="SettingPage">
+        
+       { 
+          Loading
           ?
-          <div className="SettingLoader">
+          <div className="HomeLoader">
             <ClipLoader color={"#123abc"} loading={Loading} size={50} marginLeft={500} />
           </div>
           :
-          <>
+            <Grid xs={12} container >
 
-            <Grid item xs={12}>
-              <div className="user">
-                <div className="DisplayForm">
-                  <div className="DisplayMargin">
-                    <span className="userUpdateTitle">Set QR Code</span>
-                    <div className="userUpdateForm">
-                      <div className="userUpdateLeft">
+                <Grid item style={{ marginTop: "20px", marginRight: "20px", marginBottom: "10px", marginLeft: "50px" }} lg={5} xs={12} sm={12} md={12} >
 
-                        <div className="userUpdateItem">
-                          <label>Left Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="LeftMargin"
-                            onChange={(e) => HandleInputs(e, "intimationletter", "qrcode")}
+                    <Item>
+                        <Grid item xs={12} >
+                            <h2>INTIMMATION LETTER</h2>
+                        </Grid>
+                        <Grid xs={12} container style={{ marginTop: "20px" }}>
+                            <Grid item xs={5}  >
+                            </Grid>
+                            <Grid item xs={3} >
+                                Left Margin
+                            </Grid>
+                            <Grid item xs={3} >
+                                Top Margin
+                            </Grid>
+                        </Grid>
+                        <Grid xs={12} container style={{ marginTop: "20px" }} >
+                            <Grid item xs={5}  >
+                                QR Code
+                            </Grid>
+                            <Grid item xs={3} >
+                                <input
+                                    type="number"
+                                    name="LeftMargin"
+                                    onChange={(e) => HandleInputs(e, "intimationletter", "qrcode")}
+                                />
+                            </Grid>
+                            <Grid item xs={3}>
+                                <input
+                                    type="number"
+                                    name="TopMargin"
+                                    onChange={(e) => HandleInputs(e, "intimationletter", "qrcode")}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid xs={12} container style={{ marginTop: "20px" }} >
+                            <Grid item xs={5}  >
+                                Registration No.
+                            </Grid>
+                            <Grid item xs={3} >
+                                <input
+                                    type="number"
+                                    name="LeftMargin"
+                                    onChange={(e) => HandleInputs(e, "intimationletter", "registrationkey")}
+                                />
+                            </Grid>
+                            <Grid item xs={3} >
+                                <input
+                                    type="number"
+                                    name="TopMargin"
+                                    onChange={(e) => HandleInputs(e, "intimationletter", "registrationkey")}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid xs={12} container style={{ marginTop: "20px" }} >
+                            <Grid item xs={5}  >
+                                Security Key
+                            </Grid>
+                            <Grid item xs={3} >
+                                <input
+                                    type="number"
+                                    name="LeftMargin"
+                                    onChange={(e) => HandleInputs(e, "intimationletter", "securitykey")}
+                                />
+                            </Grid>
+                            <Grid item xs={3} >
+                                <input
+                                    type="number"
+                                    name="TopMargin"
+                                    onChange={(e) => HandleInputs(e, "intimationletter", "securitykey")}
+                                />
+                            </Grid>
 
-                          />
-                        </div>
-                        <div className="userUpdateItem">
-                          <label>Top Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="TopMargin"
-                            onChange={(e) => HandleInputs(e, "intimationletter", "qrcode")}
-                          />
-                        </div>
-                      </div>
-                      <div className="userUpdateRight">
-                        <div className="userUpdateUpload">
-                          <input type="file" id="file" style={{ display: "none" }} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                        </Grid>
+                        <Grid xs={12} container style={{ marginTop: "20px" }} >
+                            <Grid item xs={5}  >
+                                Note Serial No.
+                            </Grid>
+                            <Grid item xs={3} >
+                                <input
+                                    type="number"
+                                    name="LeftMargin"
+                                    onChange={(e) => HandleInputs(e, "intimationletter", "noteserialno")}
+                                />
+                            </Grid>
+                            <Grid item xs={3} >
+                                <input
+                                    type="number"
+                                    name="TopMargin"
+                                    onChange={(e) => HandleInputs(e, "intimationletter", "noteserialno")}
+                                />
+                            </Grid>
+                        </Grid>
 
-                  <div className="DisplayMargin">
-                    <span className="userUpdateTitle">Set Registration No.</span>
-                    <div className="userUpdateForm">
-                      <div className="userUpdateLeft">
-                        <div className="userUpdateItem">
-                          <label>Left Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="LeftMargin"
-                            onChange={(e) => HandleInputs(e, "intimationletter", "registrationkey")}
-                          />
-                        </div>
-                        <div className="userUpdateItem">
-                          <label>Top Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="TopMargin"
-                            onChange={(e) => HandleInputs(e, "intimationletter", "registrationkey")}
-                          />
-                        </div>
-                      </div>
-                      <div className="userUpdateRight">
-                        <div className="userUpdateUpload">
-                          <input type="file" id="file" style={{ display: "none" }} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="DisplayForm">
-                  <div className="DisplayMargin">
-                    <span className="userUpdateTitle">Set Security Key</span>
-                    <div className="userUpdateForm">
-                      <div className="userUpdateLeft">
-                        <div className="userUpdateItem">
-                          <label>Left Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="LeftMargin"
-                            id="2"
-                            onChange={(e) => HandleInputs(e, "intimationletter", "securitykey")}
-                          />
-                        </div>
-                        <div className="userUpdateItem">
-
-                          <label>Top Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="TopMargin"
-                            id="2"
-                            onChange={(e) => HandleInputs(e, "intimationletter", "securitykey")}
-                          />
-                        </div>
-                      </div>
-                      <div className="userUpdateRight">
-                        <div className="userUpdateUpload">
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="DisplayMargin">
-                    <span className="userUpdateTitle">Set Issue Date</span>
-                    <div className="userUpdateForm">
-                      <div className="userUpdateLeft">
-                        <div className="userUpdateItem">
-                          <label>Left Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="LeftMargin"
-                            id="3"
-                            onChange={(e) => HandleInputs(e, "intimationletter", "issuedate")}
-                          />
-                        </div>
-                        <div className="userUpdateItem">
-
-                          <label>Top Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="TopMargin"
-                            id="3"
-                            onChange={(e) => HandleInputs(e, "intimationletter", "issuedate")}
-                          />
-                        </div>
-                      </div>
-                      <div className="userUpdateRight">
-                        <div className="userUpdateUpload">
-                          <input type="file" id="file" style={{ display: "none" }} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="DisplayForm">
-                  <div className="DisplayMargin">
-                    <span className="userUpdateTitle">Set Note Serial No.</span>
-                    <div className="userUpdateForm">
-                      <div className="userUpdateLeft">
-                        <div className="userUpdateItem">
-                          <label>Left Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="LeftMargin"
-                            id="4"
-                            onChange={(e) => HandleInputs(e, "intimationletter", "noteserialno")}
-                          />
-                        </div>
-                        <div className="userUpdateItem">
-
-                          <label>Top Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="TopMargin"
-                            id="4"
-                            onChange={(e) => HandleInputs(e, "intimationletter", "noteserialno")}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <br /><br />
-                  </div>
-
-                  <Grid item xs={6}>
-                    <div >
-                      <form onSubmit={onFormSubmit}>
-                        <div className="intimationletteruploadfile">
-                          <input type="file" name="BackgroundImage" onChange={ImageInput} />
-                          <button type="submit">Upload</button>
-                        </div>
-                      </form>
-                    </div>
-                    <button className="userUpdateButton" onClick={() => SubmitPageSetting()}>Update</button>
-                  </Grid>
-
-                </div>
+                        <Grid xs={12} container style={{ marginTop: "20px" }} >
+                            <Grid item xs={5}  >
+                                Issued Date
+                            </Grid>
+                            <Grid item xs={3} >
+                                <input
+                                    type="number"
+                                    name="LeftMargin"
+                                    onChange={(e) => HandleInputs(e, "intimationletter", "issuedate")}
+                                />
+                            </Grid>
+                            <Grid item xs={3} >
+                                <input
+                                    type="number"
+                                    name="TopMargin"
+                                    onChange={(e) => HandleInputs(e, "intimationletter", "issuedate")}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid xs={12} container style={{ marginTop: "20px" }} >
+                            <form onSubmit={onFormSubmit}>
+                                <input type="file" name="BackgroundImage" onChange={ImageInput} />
+                                <button type="submit">Upload</button>
+                            </form>
+                        </Grid>
+                    </Item>
+                </Grid>
 
 
-                {/* Booking Form Setting */}
-                <div className="DisplayForm">
+                {/* Right Side */}
+                <Grid item style={{ marginTop: "20px", marginRight: "20px", marginBottom: "10px", marginLeft: "50px" }} lg={5} xs={12} sm={12} md={12} >
+                    <Item>
+                        <Grid item xs={12} >
+                            <h2>BOOKING FORM</h2>
+                        </Grid>
+                        <Grid xs={12} container style={{ marginTop: "20px" }}>
+                            <Grid item xs={5}  >
+                            </Grid>
+                            <Grid item xs={3} >
+                                Left Margin
+                            </Grid>
+                            <Grid item xs={3} >
+                                Top Margin
+                            </Grid>
+                        </Grid>
+                        <Grid xs={12} container style={{ marginTop: "20px" }} >
+                            <Grid item xs={5}  >
+                                QR Code
+                            </Grid>
+                            <Grid item xs={3} >
+                                <input
+                                    type="number"
+                                    name="LeftMargin"
+                                    onChange={(e) => HandleInputs(e, "bookingform", "qrcode")}
+                                />
+                            </Grid>
+                            <Grid item xs={3} >
+                                <input
+                                    type="number"
+                                    name="TopMargin"
+                                    onChange={(e) => HandleInputs(e, "bookingform", "qrcode")}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid xs={12} container style={{ marginTop: "20px" }} >
+                            <Grid item xs={5}  >
+                                Registration No.
+                            </Grid>
+                            <Grid item xs={3} >
+                                <input
+                                    type="number"
+                                    name="LeftMargin"
+                                    onChange={(e) => HandleInputs(e, "bookingform", "registrationkey")}
+                                />
+                            </Grid>
+                            <Grid item xs={3} >
+                                <input
+                                    type="number"
+                                    name="TopMargin"
+                                    onChange={(e) => HandleInputs(e, "bookingform", "registrationkey")}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid xs={12} container style={{ marginTop: "20px" }} >
+                            <Grid item xs={5}  >
+                                Security Key
+                            </Grid>
+                            <Grid item xs={3} >
+                                <input
+                                    type="number"
+                                    name="LeftMargin"
+                                    onChange={(e) => HandleInputs(e, "bookingform", "securitykey")}
+                                />
+                            </Grid>
+                            <Grid item xs={3} >
+                                <input
+                                    type="number"
+                                    name="TopMargin"
+                                    onChange={(e) => HandleInputs(e, "bookingform", "securitykey")}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid xs={12} container style={{ marginTop: "20px" }} >
 
-                  <div className="DisplayMargin">
-                    <span className="userUpdateTitle">Set QR Code</span>
-                    <div className="userUpdateForm">
-                      <div className="userUpdateLeft">
-
-                        <div className="userUpdateItem">
-                          <label>Left Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="LeftMargin"
-                            onChange={(e) => HandleInputs(e, "bookingform", "qrcode")}
-
-                          />
-                        </div>
-                        <div className="userUpdateItem">
-                          <label>Top Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="TopMargin"
-                            onChange={(e) => HandleInputs(e, "bookingform", "qrcode")}
-                          />
-                        </div>
-                      </div>
-                      <div className="userUpdateRight">
-                        <div className="userUpdateUpload">
-                          <input type="file" id="file" style={{ display: "none" }} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="DisplayMargin">
-                    <span className="userUpdateTitle">Set Registration No.</span>
-                    <div className="userUpdateForm">
-                      <div className="userUpdateLeft">
-                        <div className="userUpdateItem">
-                          <label>Left Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="LeftMargin"
-                            onChange={(e) => HandleInputs(e, "bookingform", "registrationkey")}
-
-                          />
-                        </div>
-                        <div className="userUpdateItem">
-                          <label>Top Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="TopMargin"
-                            onChange={(e) => HandleInputs(e, "bookingform", "registrationkey")}
-                          />
-                        </div>
-                      </div>
-                      <div className="userUpdateRight">
-                        <div className="userUpdateUpload">
-                          <input type="file" id="file" style={{ display: "none" }} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="DisplayForm">
-                  <div className="DisplayMargin">
-                    <span className="userUpdateTitle">Set Security Key</span>
-                    <div className="userUpdateForm">
-                      <div className="userUpdateLeft">
-                        <div className="userUpdateItem">
-                          <label>Left Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="LeftMargin"
-                            id="2"
-                            onChange={(e) => HandleInputs(e, "bookingform", "securitykey")}
-                          />
-                        </div>
-                        <div className="userUpdateItem">
-
-                          <label>Top Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="TopMargin"
-                            id="2"
-                            onChange={(e) => HandleInputs(e, "bookingform", "securitykey")}
-                          />
-                        </div>
-                      </div>
-                      <div className="userUpdateRight">
-                        <div className="userUpdateUpload">
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="DisplayMargin">
-                    <span className="userUpdateTitle">Set Issue Date</span>
-                    <div className="userUpdateForm">
-                      <div className="userUpdateLeft">
-                        <div className="userUpdateItem">
-                          <label>Left Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="LeftMargin"
-                            id="3"
-                            onChange={(e) => HandleInputs(e, "bookingform", "issuedate")}
-                          />
-                        </div>
-                        <div className="userUpdateItem">
-
-                          <label>Top Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="TopMargin"
-                            id="3"
-                            onChange={(e) => HandleInputs(e, "bookingform", "issuedate")}
-                          />
-                        </div>
-                      </div>
-                      <div className="userUpdateRight">
-                        <div className="userUpdateUpload">
-                          <input type="file" id="file" style={{ display: "none" }} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="DisplayForm">
-                  <div className="DisplayMargin">
-                    <span className="userUpdateTitle">Set Note Serial No.</span>
-                    <div className="userUpdateForm">
-                      <div className="userUpdateLeft">
-                        <div className="userUpdateItem">
-                          <label>Left Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="LeftMargin"
-                            id="4"
-                            onChange={(e) => HandleInputs(e, "bookingform", "noteserialno")}
-                          />
-                        </div>
-                        <div className="userUpdateItem">
-
-                          <label>Top Margin</label>
-                          <input
-                            type="text"
-                            className="userUpdateInput"
-                            name="TopMargin"
-                            id="4"
-                            onChange={(e) => HandleInputs(e, "bookingform", "noteserialno")}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <br /><br />
-                  </div>
-                  <Grid>
-                    <form onSubmit={onFormSubmit1}>
-                      <input type="file" name="BackgroundImage" onChange={ImageInput} />
-                      <button type="submit">Upload</button>
-                    </form>
-                  </Grid>
-                </div>
-
-              </div>
-
-            </Grid>
-
-          </>
-
-      }
-
-
-    </div>
-  );
+                            <Grid item xs={5}  >
+                                Note Serial No.
+                            </Grid>
+                            <Grid item xs={3} >
+                                <input
+                                    type="number"
+                                    name="LeftMargin"
+                                    onChange={(e) => HandleInputs(e, "bookingform", "noteserialno")}
+                                />
+                            </Grid>
+                            <Grid item xs={3} >
+                                <input
+                                    type="number"
+                                    name="TopMargin"
+                                    onChange={(e) => HandleInputs(e, "bookingform", "noteserialno")}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid xs={12} container style={{ marginTop: "20px" }} >
+                            <Grid item xs={5}  >
+                                Issued Date
+                            </Grid>
+                            <Grid item xs={3} >
+                                <input
+                                    type="number"
+                                    name="LeftMargin"
+                                    onChange={(e) => HandleInputs(e, "bookingform", "issuedate")}
+                                />
+                            </Grid>
+                            <Grid item xs={3} >
+                                <input
+                                    type="number"
+                                    name="TopMargin"
+                                    onChange={(e) => HandleInputs(e, "bookingform", "issuedate")}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid xs={12} container style={{ marginTop: "20px" }} >
+                            <form onSubmit={onFormSubmit1}>
+                                <input type="file" name="BackgroundImage" onChange={ImageInput} />
+                                <button type="submit">Upload</button>
+                            </form>
+                        </Grid>
+                    </Item>
+                </Grid>
+                <Grid container sx={12}>
+                    <Grid xs={5} style={{ marginLeft: "38px" }}>
+                    </Grid>
+                    <Grid xs={2}>
+                        <button onClick={SubmitPageSetting}>Update All</button>
+                    </Grid>
+                </Grid>
+            </Grid>}
+        </div>
+    )
 }
-
-
-
-
-
-
-
-
-
+export default TopLeftSetting;

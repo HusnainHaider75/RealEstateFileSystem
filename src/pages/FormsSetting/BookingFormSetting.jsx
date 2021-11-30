@@ -35,8 +35,6 @@ export default function QR_Code(props) {
     }
   }
 
-
-  
   const [FileData, SetFileData] = useState([]);
 
   const LoadFileDetail = async (RegNo) => {
