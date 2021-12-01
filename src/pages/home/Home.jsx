@@ -11,13 +11,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Home() {
 
-  const redirect = useHistory();
-
-  const { isAuthenticated } =useAuth0();
-  if(!isAuthenticated){
-    redirect.push("/")
-  }
   const [Loading, SetLoading] = useState(false);
+  const { logout } = useAuth0();
 
   useEffect(() => {
     SetLoading(true);
@@ -25,6 +20,11 @@ export default function Home() {
       SetLoading(false);
     }, 2000);
   }, [])
+  function Logout(){
+    localStorage.removeItem("auth0spajs");
+    logout();
+  }
+
 
   return (
     <>
@@ -37,6 +37,7 @@ export default function Home() {
           </div>
           :
           <>
+         
             <FeaturedInfo />
             <Chart data={userData} title="User Analytics" grid dataKey="Active User" />
             <div className="homeWidgets">

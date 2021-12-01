@@ -65,12 +65,12 @@ app.post("/createfile", async (req, res) => {
 });
 
 //Load All User's Files
-app.get("/loaduser", async (req, res) => {
+app.get("/loadfiles", async (req, res) => {
   const AllUser = await UserFilesModel.find({ Status: true });
   try {
     AllUser ? res.send(AllUser) : res.send(false);
   } catch {
-    res.send();
+    res.send(false);
   }
 });
 
