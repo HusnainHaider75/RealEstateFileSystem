@@ -6,14 +6,14 @@ const bodyparser = require("body-parser");
 app.use(bodyparser());
 app.use(cors());
 require("./connection/dbCon");
+const path = require('path')
 const UserFilesModel = require("./schema/UserFilesModel");
 const SettingsModel = require("./schema/SettingsModel");
 const MembersModel = require("./schema/MembersSchema");
 const multer = require('multer');
-app.use(express.static('./public/uploads'));
+app.use(express.static('./public/'));
 
-
-//Image Upload
+//Intimation Background Image Upload
 const storage = multer.diskStorage({
   destination: "./public/uploads/",
   filename: function (req, file, cb) {
@@ -23,8 +23,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage: storage,
-}).single("myImage");
+}).single("IntimationFormBackgroundPicture");
 
+//Intimation Background Image Upload
 const storagebookingform = multer.diskStorage({
   destination: "./public/uploads/",
   filename: function (req, file, cb) {
@@ -193,7 +194,6 @@ app.post(`/pagesetting`, upload, async (req, res) => {
 
 //Upload Image
 app.post("/uploadintimationletter", upload, (req, res, err) => {
-
   if (!err)
     return res.send(200).end();
 })
@@ -234,8 +234,22 @@ app.get(`/loadfiledata/:RegNo`, async (req, res) => {
   }
 });
 
-//Add New Member
-app.post("/addnewmember", async (req, res) => {
+
+//Add New Member with Upload Image
+const MemberStorage = multer.diskStorage({
+  destination: "./public/memberpictures/",
+  filename: function (req, file, cb) {
+    cb(null, "file"+Date.now()+path.extname(file.originalname));
+  }
+});
+
+const uploadMemberPicture = multer({
+  storage: MemberStorage,
+}).single("Picture");
+
+
+app.post("/uploadprofileimage", uploadMemberPicture, async (req, res) => {
+  
   console.log(req.body);
   const {
     FullName,
@@ -243,7 +257,7 @@ app.post("/addnewmember", async (req, res) => {
     MembershipNo,
     CNIC,
     PhoneNo,
-    Address
+    Address,
   } = req.body;
   const obj = new MembersModel({
     FullName,
@@ -251,7 +265,7 @@ app.post("/addnewmember", async (req, res) => {
     MembershipNo,
     CNIC,
     PhoneNo,
-    Address
+    Address,
   });
   const MemberCreated = await obj.save();
   try {
@@ -260,6 +274,18 @@ app.post("/addnewmember", async (req, res) => {
     res.send(err);
   }
 });
+
+
+//Load All User's Files
+app.get("/loadmembers", async (req, res) => {
+  const AllMembers = await MembersModel.find({ Status: true });
+  try {
+    AllMembers ? res.send(AllMembers) : res.send(false);
+  } catch {
+    res.send(false);
+  }
+});
+
 
 
 

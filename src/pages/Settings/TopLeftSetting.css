@@ -1,4 +1,4 @@
-.SettingPage{
+/* .SettingPage{
   flex:7;
 }
 form { 
@@ -197,41 +197,11 @@ form {
   padding-bottom:5px;
   }
 }
-.DisplayForm{
-  display: flex;
-  flex-direction: row;
-}
-.DisplayMargin{
- 
-    flex: 2;
-    padding: 40px;
-    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    margin-left: 117px;
-    margin-right: -4px;
 
-}
-.UploadMargin{
-  margin-left: 30px;
-  margin-right: 70px;
-}
 
-.updateBoxStyle{
-  margin-left: 250px;
-  margin-top: 150px;
-}
-.userUpdateButton{
-  border-radius: 5px;
-  border: none;
-  margin-left: 150px;
-  padding: 5px;
-  cursor: pointer;
-  background-color: rgb(77, 77, 221);
-  color: white;
-  font-weight: 600;
-}
+
 .SettingLoader{
   margin-left: 415px;
   margin-right: 400px;
   margin-top: 275px;
-}
+} */

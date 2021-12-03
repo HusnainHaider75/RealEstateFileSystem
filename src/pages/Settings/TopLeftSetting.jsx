@@ -41,7 +41,7 @@ function TopLeftSetting() {
     function onFormSubmit(e) {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('myImage', state.file);
+        formData.append('IntimationFormBackgroundPicture', state.file);
         const config = {
             headers: {
                 'content-type': 'multipart/form-data'

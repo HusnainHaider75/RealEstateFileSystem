@@ -83,7 +83,7 @@ export default function QR_Code(props) {
             </div>
             :
             <div style={{ marginLeft: "110px", marginTop: "20px" }}>
-              <img src="http://localhost:4000/BookingFormBackgroundPicture.jpg" alt='' style={{ width: "550px", position: "absolute" }} />
+              <img src="http://localhost:4000/BackgroundImages/BookingFormBackgroundPicture.jpg" alt='' style={{ width: "550px", position: "absolute" }} />
 
               {imageUrl ? (
                 <a href={imageUrl} download>

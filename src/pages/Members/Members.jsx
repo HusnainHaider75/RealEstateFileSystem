@@ -64,7 +64,7 @@ export default function MyApp() {
         redirect.push("/")
     }
 
-    const [LoadUser, setLoadUser] = useState([]);
+    const [Members, setMembers] = useState([]);
     const [Loading, SetLoading] = useState(false);
 
     useEffect(() => {
@@ -75,20 +75,10 @@ export default function MyApp() {
         }, 2000);
     }, [])
 
-    function OpenIntimationLetter(RegistrationNo) {
-        const type = "intimation";
-        window.open(`/intimationQRCode/registration/${RegistrationNo}/type/${type}`);
-
-    }
-
-    function OpenBookingLetter(RegistrationNo) {
-        const type = "booking";
-        window.open(`/bookingQRCode/registration/${RegistrationNo}/type/${type}`)
-    }
-
+    
     function AllUserData() {
-        axios.get('http://localhost:4000/loadfiles')
-            .then((res) => setLoadUser(res.data))
+        axios.get('http://localhost:4000/loadmembers')
+            .then((res) => setMembers(res.data))
             .catch(err => window.alert(err))
     }
 
@@ -109,53 +99,35 @@ export default function MyApp() {
         redirect.push(`/updatefile/${id}`);
     }
     const columns = [
-        { field: "RegistrationNo", headerName: "Registration No.", type: "string", width: 140, editable: true },
-        { field: "IntinitationLetterSerial", headerName: "Intimation Serial", type: "string", width: 140, editable: true },
+        { field: "FullName", headerName: "Full Name", type: "string", width: 140,  },
+        { field: "FatherName", headerName: "FatherName", type: "string", width: 140,  },
         {
-            field: "BookingFormSerial",
-            headerName: "Booking Serial",
+            field: "MembershipNo",
+            headerName: "Membership No.",
             type: "string",
             width: 140,
-            editable: true
+            
         },
         {
-            field: "IssueDate",
-            headerName: "Issue Date",
+            field: "CNIC",
+            headerName: "CNIC",
             type: "string",
-            width: 120,
+            width: 140,
             editable: false
         },
         {
-            field: "IntinitationLetterSerialQRCode",
-            headerName: "Intimation Form",
+            field: "PhoneNo",
+            headerName: "Phone No.",
             type: "string",
             width: 140,
-            editable: false,
-            renderCell: (params) => {
-                return (
-                    <>
-                        <Link onClick={() => OpenIntimationLetter(params.row.RegistrationNo, params.row.IntinitationLetterSerial, params.row.IssueDate)}>
-                            <span>Intimation Letter</span>
-                        </Link>
-                    </>
-                );
-            }
+            
         },
         {
-            field: "BookingFormQRCode",
-            headerName: "Booking Form",
+            field: "RegistrationNo",
+            headerName: "Registration No.",
             type: "string",
             width: 140,
-            editable: false,
-            renderCell: (params) => {
-                return (
-                    <>
-                        <Link onClick={() => OpenBookingLetter(params.row.RegistrationNo, params.row.BookingFormSerial, params.row.IssueDate)}>
-                            <span>Booking Form</span>
-                        </Link>
-                    </>
-                );
-            }
+            
         },
 
         {
@@ -186,14 +158,14 @@ export default function MyApp() {
         },
     ];
 
-    const rows = LoadUser && LoadUser.map((user, index) => {
+    const rows = Members && Members.map((user, index) => {
         return {
             id: user._id,
-            RegistrationNo: user.RegistrationNo,
-            BookingFormSerial: user.BookingFormSerial,
-            IntinitationLetterSerial: user.IntinitationLetterSerial,
-            CreatedBy: user.IssueDate,
-            IssueDate: user.IssueDate
+            FullName: user.FullName,
+            FatherName: user.FatherName,
+            MembershipNo: user.MembershipNo,
+            CNIC: user.CNIC,
+            PhoneNo: user.PhoneNo
         }
     })
 

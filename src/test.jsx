@@ -1,110 +1,108 @@
+import React from 'react';
+import TextField from '@mui/material/TextField';
+import './test.css';
 import {
-    Publish,
-  } from "@material-ui/icons";
-  import { useState, useEffect } from "react";
-  import { useHistory, useParams } from "react-router";
-  import axios from "axios";
-  export default function User() {
-  
-    const redirect = useHistory();
-    if (!localStorage.getItem("auth0spajs")) {
-      redirect.push("/")
-    }
-  
-    const { id } = useParams();
-    const [UpdatedUser, SetUpdatedUser] = useState({
-      RegistrationNo: "", IntinitationLetterSerial: "",
-      BookingFormSerial: "", Detail: ""
-    });
-  
-    function LoadUserData() {
-      axios.get(`http://localhost:4000/loaduser/${id}`).then((res) => SetUpdatedUser(res.data)).catch(err => window.alert(err));
-    }
-  
-  
-    let name, value;
-    function HandleInputs(e) {
-      name = e.target.name;
-      value = e.target.value;
-      SetUpdatedUser({ ...UpdatedUser, [name]: value })
-      console.log(UpdatedUser);
-    }
-  
-  
-    function AddMember(id) {
-      axios.put(`http://localhost:4000/AddMember/${id}`, UpdatedUser)
-        .then(() => redirect.push('/files'))
-        .catch(err => window.alert(err));
-    }
-  
-    return (
-      <>
-        <div className="user">
-          <div className="userUpdate">
-            <span className="userUpdateTitle">Edit</span>
-            <div className="userUpdateForm">
-              <div className="userUpdateLeft">
-                <div className="userUpdateItem">
-                  <label>Registration No</label>
-                  <input
-                    type="text"
-                    placeholder="Registration No"
-                    className="userUpdateInput"
-                    name="RegistrationNo"
-                    onChange={(e) => HandleInputs(e)}
-                  />
-                </div>
-                <div className="userUpdateItem">
-                  <label>Intinitation Letter Serial</label>
-                  <input
-                    type="text"
-                    placeholder="Intinitation Letter Serial"
-                    className="userUpdateInput"
-                    name="IntinitationLetterSerial"
-                    onChange={(e) => HandleInputs(e)}
-                  />
-                </div>
-                <div className="userUpdateItem">
-                  <label>Booking Form Serial</label>
-                  <input
-                    type="text"
-                    placeholder="Booking Form Serial"
-                    className="userUpdateInput"
-                    name="BookingFormSerial"
-  
-                    onChange={(e) => HandleInputs(e)}
-                  />
-                </div>
-                <div className="userUpdateItem">
-                  <label>Detail</label>
-                  <input
-                    type="text"
-                    placeholder="Detail"
-                    className="userUpdateInput"
-                    name="Detail"
-  
-                    onChange={(e) => HandleInputs(e)}
-                  />
-                </div>
-              </div>
-              <div className="userUpdateRight">
-                <div className="userUpdateUpload">
-                  <img
-                    className="userUpdateImg"
-                    src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-                    alt=""
-                  />
-                  <label htmlFor="file">
-                    <Publish className="userUpdateIcon" />
-                  </label>
-                  <input type="file" id="file" style={{ display: "none" }} />
-                </div>
-                <button className="userUpdateButton" onClick={() => AddMember(id)}>Update</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-    );
-  }
-  
+  Button,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+  FormHelperText,
+  FormGroup,
+  Checkbox,
+} from '@mui/material';
+import { useForm } from "react-hook-form";
+
+const App = () => {
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const onSubmit = (data) => console.log(data);
+  console.log(errors);
+
+  return (
+    <div style={{flex:"7"}}>
+      <div className="App__form">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <TextField
+            id="outlined-basic"
+            name="firstName"
+            label="First Name"
+            variant="outlined"
+            fullWidth
+            {...register("firstName", { required: "First Name is required." })}
+            error={Boolean(errors.firstName)}
+            helperText={errors.firstName?.message}
+          />
+          <TextField
+            id="outlined-basic"
+            label="Last Name"
+            variant="outlined"
+            fullWidth
+            name="lastName"
+            {...register("lastName", { required: "Last Name is required." })}
+            error={Boolean(errors.lastName)}
+            helperText={errors.lastName?.message}
+          />
+          <TextField
+            id="outlined-basic"
+            label="E-mail"
+            variant="outlined"
+            fullWidth
+            name="email"
+            {...register("email", { required: "E-mail Address is required." })}
+            error={Boolean(errors.email)}
+            helperText={errors.email?.message}
+          />
+          {/* Radio button */}
+          <FormControl error={Boolean(errors.gender)} >
+            <FormLabel component="legend"> Choose Your Gender </FormLabel>
+            <RadioGroup row aria-label="gender" name="gender">
+              <FormControlLabel
+                value="female"
+                control={
+                  <Radio {...register("gender", { required: "Choose your gender" })} />
+                }
+                label="Female"
+              />
+              <FormControlLabel
+                value="male"
+                control={
+                  <Radio {...register("gender", { required: "Choose your gender" })} />
+                }
+                label="Male"
+              />
+              <FormControlLabel
+                value="other"
+                control={
+                  <Radio {...register("gender", { required: "Choose your gender" })} />
+                }
+                label="Other"
+              />
+
+            </RadioGroup>
+            <FormHelperText style={{ color: '#d32f2f' }}>{errors.gender?.message}</FormHelperText>
+          </FormControl>
+          <div className="clearfix"></div>
+          {/* Check box */}
+          <FormGroup
+            error={Boolean(errors.tnc)}
+            style={{ display: "block", marginTop: "17px" }}
+          >
+            <FormControlLabel
+              control={
+                <Checkbox name="tnc" {...register("tnc", { required: "please aggre our terms and condtions" })} />
+              }
+              label="I aggree all terms and conditions"
+            />
+          </FormGroup>
+          <FormHelperText style={{ color: '#d32f2f' }}>{errors.tnc?.message}</FormHelperText>
+          <div className="clearfix"></div>
+          <Button variant="contained" color="primary" type="submit" className="btns">
+            create new account
+          </Button>
+        </form>
+      </div>
+    </div>
+  )
+}
+export default App

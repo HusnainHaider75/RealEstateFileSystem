@@ -3,8 +3,9 @@ const MemberModel = mongoose.Schema({
     FullName: String,
     FatherName: String,
     MembershipNo: String,
-    CNIC : String,
+    CNIC : Number,
     PhoneNo: String,
+    Picture: String
 });
 const DataSample =mongoose.model('MembersData', MemberModel);
 module.exports =DataSample;
