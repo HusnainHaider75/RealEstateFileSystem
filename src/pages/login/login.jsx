@@ -1,18 +1,13 @@
-import React from "react";
+import {React, useState} from "react";
 import "./login.css";
 import { useHistory } from "react-router"; 
 import { useAuth0 } from "@auth0/auth0-react";
-import {useState} from "react"
 
 export default function SignIn() {
 
   const redirect = useHistory();
-  const {
-    loginWithPopup,
-    getAccessTokenWithPopup,
-    getAccessTokenSilently
-  } = useAuth0();
-  const { loginWithRedirect, user, isAuthenticated } =useAuth0();
+  
+  const { loginWithRedirect,user, isAuthenticated, getAccessTokenSilently } =useAuth0();
   if(localStorage.getItem("auth0spajs")){
     redirect.push("/home")
   }
@@ -30,25 +25,18 @@ export default function SignIn() {
     },
   };
 
-  const Tokken = async ()=>{
-    const token = await getAccessTokenSilently();
-    localStorage.setItem("Token:",token)
-    token && console.log(JSON.stringify(token));
-  }
+  
   if (user) {
-    Tokken();
     if (!localStorage.getItem("auth0spajs")) {
        asyncLocalStorage
         .setItem("auth0spajs", JSON.stringify(user))
         .then(async function () {
-          const result = await asyncLocalStorage.getItem("auth0spajs");
+          await asyncLocalStorage.getItem("auth0spajs");
         });
     }
-    
   }
   
-
-  console.log(user);
+  
   return (
     <>
       <div className="topbar">

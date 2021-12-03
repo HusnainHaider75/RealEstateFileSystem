@@ -4,7 +4,6 @@ import {
   Timeline,
   TrendingUp,
   PermIdentity,
-  Storefront,
   AttachMoney,
   BarChart,
   MailOutline,
@@ -12,6 +11,7 @@ import {
   ChatBubbleOutline,
   WorkOutline,
 } from "@material-ui/icons";
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 import { Link } from "react-router-dom";
@@ -44,14 +44,14 @@ export default function Sidebar() {
           <ul className="sidebarList">
             <Link to="/files" className="link">
               <li className="sidebarListItem">
-                <PermIdentity className="sidebarIcon" />
-                Users
+                <InsertDriveFileIcon className="sidebarIcon" />
+                Files
               </li>
             </Link>
-            <Link to="/products" className="link">
+            <Link to="/members" className="link">
               <li className="sidebarListItem">
-                <Storefront className="sidebarIcon" />
-                Products
+                <PermIdentity className="sidebarIcon" />
+                Members
               </li>
             </Link>
             <li className="sidebarListItem">

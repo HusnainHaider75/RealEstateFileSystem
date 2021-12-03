@@ -8,6 +8,8 @@ ReactDOM.render(
    domain="haiders715.us.auth0.com"
     clientId="rTo46YuWlj9XQuhcMsHmvlzSB183Un4B"
     redirectUri={window.location.origin}
+    audience="https://royalgradencity/api"
+    scope="openid profile email"
    >
    <App />
    </Auth0Provider>

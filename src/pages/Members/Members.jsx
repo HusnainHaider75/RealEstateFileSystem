@@ -1,12 +1,11 @@
 import * as React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+import './Members.css'
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import { ImFolderPlus } from "react-icons/im";
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import { DataGrid } from "@mui/x-data-grid";
-import './FileList.css'
 import { DeleteOutline } from "@material-ui/icons";
 import EditIcon from '@material-ui/icons/Edit';
 import { useState, useEffect } from 'react';
@@ -215,10 +214,10 @@ export default function MyApp() {
                         <Paper className={classes.content}>
                             <div className={classes.toolbar}>
                                 <Typography variant="h6" component="h2" color="primary">
-                                    Files
+                                    Members
                                 </Typography>
-                                <Link to={"/newfile"}>
-                                    <ImFolderPlus size={30} className="userListAdd"></ImFolderPlus>
+                                <Link to={"/newmember"}>
+                                    <GroupAddIcon style={{marginRight:"20px"}} className="userListAdd"></GroupAddIcon>
                                 </Link>
                             </div>
                             <div style={{ height: 400, width: "100%" }}>

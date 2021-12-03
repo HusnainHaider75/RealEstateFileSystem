@@ -6,7 +6,7 @@ export default function Topbar(props) {
   const { logout } = useAuth0();
 
   function Logout(){
-    localStorage.removeItem("auth0spajs");
+    localStorage.clear();
     logout();
   }
 

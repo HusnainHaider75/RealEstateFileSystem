@@ -8,10 +8,12 @@ app.use(cors());
 require("./connection/dbCon");
 const UserFilesModel = require("./schema/UserFilesModel");
 const SettingsModel = require("./schema/SettingsModel");
+const MembersModel = require("./schema/MembersSchema");
 const multer = require('multer');
-
 app.use(express.static('./public/uploads'));
 
+
+//Image Upload
 const storage = multer.diskStorage({
   destination: "./public/uploads/",
   filename: function (req, file, cb) {
@@ -232,7 +234,78 @@ app.get(`/loadfiledata/:RegNo`, async (req, res) => {
   }
 });
 
+//Add New Member
+app.post("/addnewmember", async (req, res) => {
+  console.log(req.body);
+  const {
+    FullName,
+    FatherName,
+    MembershipNo,
+    CNIC,
+    PhoneNo,
+    Address
+  } = req.body;
+  const obj = new MembersModel({
+    FullName,
+    FatherName,
+    MembershipNo,
+    CNIC,
+    PhoneNo,
+    Address
+  });
+  const MemberCreated = await obj.save();
+  try {
+    MemberCreated ? res.send(true) : res.send(false);
+  } catch (err) {
+    res.send(err);
+  }
+});
+
 
 
 //Listen from Server
-app.listen(port, console.log("Server is Running at port-4000"));
+app.listen(port, console.log(`Server is Running at port-${port}`));
+
+
+
+
+
+
+
+
+
+
+
+
+// const jwt = require('express-jwt');
+// const jwks = require('jwks-rsa');
+// const axios = require('axios');
+
+
+// //Auth0 Permissions and Roles Validation
+// // var jwtCheck = jwt({
+// //   secret: jwks.expressJwtSecret({
+// //     cache: true,
+// //     rateLimit: true,
+// //     jwksRequestsPerMinute: 5,
+// //     jwksUri: 'https://haiders715.us.auth0.com/.well-known/jwks.json'
+// //   }),
+// //   audience: 'https://royalgradencity/api',
+// //   issuer: 'https://haiders715.us.auth0.com/',
+// //   algorithms: ['RS256']
+// // }).unless({ path: ['/'] })
+// // app.use(jwtCheck);
+
+// // app.get('/testapi', async (req, res) => {
+// //     const accessToken = req.headers.authorization.split(' ')[1];
+// //     const response = await axios.get('https://haiders715.us.auth0.com/userinfo',
+// //       {
+// //         headers: {
+// //           Authorization: `Bearer ${accessToken}`
+// //         }
+// //       })
+// //     const userInfo = response.data;
+// //     console.log(userInfo)
+// //     res.send(userInfo);
+
+// // });

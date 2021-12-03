@@ -16,6 +16,11 @@ import IntinitationLetter from "./pages/FormsSetting/IntinitationFromSettings";
 import BookingForm from "./pages/FormsSetting/BookingFormSetting";
 import TopLeftSetting from './pages/Settings/TopLeftSetting';
 import  ShowForm from './pages/ShowForm/ShowForm';
+import Members from './pages/Members/Members';
+import NewMember from './pages/NewMember/NewMember'
+import Test from "./test";
+
+
 function App() {
   const{ isAuthenticated }=useAuth0();
   const [State, SetState] = useState(true)
@@ -27,8 +32,11 @@ function App() {
       { isAuthenticated && State===true ? <Sidebar/> : "" }
         <Switch>
           <Route exact path="/" component={Login}/>
+          <Route exact path="/test" component={Test}/>
           <Route exact path="/home" component={Home}/>
           <Route exact path="/files" component={FileList}/> 
+          <Route exact path="/members" component={Members}/> 
+          <Route exact path="/newmember" component={NewMember}/> 
           <Route exact path="/updatefile/:id" component={UpdateFile}/> 
           <Route exact path="/newfile" component={NewFile}/> 
           <Route exact path="/products" component={ProductList}/> 
