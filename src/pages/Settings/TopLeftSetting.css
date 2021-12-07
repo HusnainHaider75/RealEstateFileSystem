@@ -1,7 +1,7 @@
-/* .SettingPage{
+ .SettingPage{
   flex:7;
 }
-form { 
+#inti-bg { 
   padding: 0;
   margin: 0;
   outline: none;
@@ -204,4 +204,4 @@ form {
   margin-left: 415px;
   margin-right: 400px;
   margin-top: 275px;
-} */
+}

@@ -1,6 +1,6 @@
 .user {
   flex:7;
-  padding: 20px;
+  padding: 10px;
 }
 
 .userTitleContainer {
@@ -140,11 +140,17 @@
 .userUpdateButton {
   border-radius: 5px;
   border: none;
-  margin-left: 150px;
+  margin-left: 160px;
   margin-top: 30px;
   padding: 5px;
   cursor: pointer;
   background-color: rgb(77, 77, 221);
   color: white;
   font-weight: 600;
+}
+.ImageUploadButton{
+  border-radius: 5px;
+  font-size: 10px;
+  background-color: rgb(77, 77, 221);
+  margin-left: 190px;
 }

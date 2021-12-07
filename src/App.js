@@ -17,7 +17,8 @@ import BookingForm from "./pages/FormsSetting/BookingFormSetting";
 import TopLeftSetting from './pages/Settings/TopLeftSetting';
 import  ShowForm from './pages/ShowForm/ShowForm';
 import Members from './pages/Members/Members';
-import NewMember from './pages/NewMember/NewMember'
+import NewMember from './pages/NewMember/NewMember';
+import UpdateMember from './pages/UpdateMember/UpdateMember'
 import Test from "./test";
 
 
@@ -37,6 +38,7 @@ function App() {
           <Route exact path="/files" component={FileList}/> 
           <Route exact path="/members" component={Members}/> 
           <Route exact path="/newmember" component={NewMember}/> 
+          <Route exact path="/updatemember/:id" component={UpdateMember}/> 
           <Route exact path="/updatefile/:id" component={UpdateFile}/> 
           <Route exact path="/newfile" component={NewFile}/> 
           <Route exact path="/products" component={ProductList}/> 

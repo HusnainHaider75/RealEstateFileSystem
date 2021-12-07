@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import {React} from "react";
 import "./login.css";
 import { useHistory } from "react-router"; 
 import { useAuth0 } from "@auth0/auth0-react";
@@ -7,7 +7,7 @@ export default function SignIn() {
 
   const redirect = useHistory();
   
-  const { loginWithRedirect,user, isAuthenticated, getAccessTokenSilently } =useAuth0();
+  const { loginWithRedirect,user, isAuthenticated } =useAuth0();
   if(localStorage.getItem("auth0spajs")){
     redirect.push("/home")
   }

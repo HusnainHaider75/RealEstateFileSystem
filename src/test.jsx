@@ -12,9 +12,12 @@ import {
   FormGroup,
   Checkbox,
 } from '@mui/material';
+
+import useAuth0 from '@auth0/auth0-react'
 import { useForm } from "react-hook-form";
 
 const App = () => {
+  
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const onSubmit = (data) => console.log(data);
   console.log(errors);
@@ -22,6 +25,7 @@ const App = () => {
   return (
     <div style={{flex:"7"}}>
       <div className="App__form">
+      
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextField
             id="outlined-basic"

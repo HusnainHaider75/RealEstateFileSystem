@@ -11,7 +11,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 export default function Home() {
 
   const [Loading, SetLoading] = useState(false);
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently, logout } = useAuth0();
 
     async function PermissionToken() {
         try {

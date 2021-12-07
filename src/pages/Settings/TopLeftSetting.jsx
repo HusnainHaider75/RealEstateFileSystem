@@ -71,8 +71,10 @@ function TopLeftSetting() {
                 alert(error)
             });
     }
+    
     function ImageInput(e) {
         setstate({ file: e.target.files[0] });
+        console.log(e.target.files[0])
     }
     
     const SettingOfPage = {
@@ -140,6 +142,7 @@ function TopLeftSetting() {
             <ClipLoader color={"#123abc"} loading={Loading} size={50} marginLeft={500} />
           </div>
           :
+         
             <Grid xs={12} container >
 
                 <Grid item style={{ marginTop: "20px", marginRight: "20px", marginBottom: "10px", marginLeft: "50px" }} lg={5} xs={12} sm={12} md={12} >
@@ -256,10 +259,8 @@ function TopLeftSetting() {
                             </Grid>
                         </Grid>
                         <Grid xs={12} container style={{ marginTop: "20px" }} >
-                            <form onSubmit={onFormSubmit}>
                                 <input type="file" name="BackgroundImage" onChange={ImageInput} />
-                                <button type="submit">Upload</button>
-                            </form>
+                                <button onClick={onFormSubmit}>Upload</button>
                         </Grid>
                     </Item>
                 </Grid>
@@ -378,10 +379,8 @@ function TopLeftSetting() {
                             </Grid>
                         </Grid>
                         <Grid xs={12} container style={{ marginTop: "20px" }} >
-                            <form onSubmit={onFormSubmit1}>
                                 <input type="file" name="BackgroundImage" onChange={ImageInput} />
-                                <button type="submit">Upload</button>
-                            </form>
+                                <button onClick={onFormSubmit1}>Upload</button>
                         </Grid>
                     </Item>
                 </Grid>

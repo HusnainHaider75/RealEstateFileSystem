@@ -87,8 +87,8 @@ export default function MyApp() {
     }
         , [])
 
-    async function DeleteUser(id) {
-        const result = await axios.put(`http://localhost:4000/deleteuser/${id}`);
+    async function DeleteMember(id) {
+        const result = await axios.put(`http://localhost:4000/deletemember/${id}`);
         message.success("Record Deleted!")
         result.data ? AllUserData() : alert("Error");
     }
@@ -96,11 +96,27 @@ export default function MyApp() {
         message.error("Delete Record Cancelled!")
     }
     async function UpdateFile(id) {
-        redirect.push(`/updatefile/${id}`);
+        redirect.push(`/updatemember/${id}`);
     }
     const columns = [
-        { field: "FullName", headerName: "Full Name", type: "string", width: 140,  },
-        { field: "FatherName", headerName: "FatherName", type: "string", width: 140,  },
+        {
+            field: "Picture",
+            headerName: "Picture",
+            type: "string",
+            width: 80,
+            renderCell: (params) => {
+                return (
+                    <>
+                    <a href={`http://localhost:4000/memberpictures/${params.row.Picture}`} download>
+                    <img className="avatar" src={`http://localhost:4000/memberpictures/${params.row.Picture}`} alt=""></img>
+                    </a>
+                    </>
+                );
+            },
+            
+        },
+        { field: "FullName", headerName: "Full Name", type: "string", width: 120,  },
+        { field: "FatherName", headerName: "FatherName", type: "string", width: 120,  },
         {
             field: "MembershipNo",
             headerName: "Membership No.",
@@ -112,19 +128,12 @@ export default function MyApp() {
             field: "CNIC",
             headerName: "CNIC",
             type: "string",
-            width: 140,
+            width: 180,
             editable: false
         },
         {
             field: "PhoneNo",
             headerName: "Phone No.",
-            type: "string",
-            width: 140,
-            
-        },
-        {
-            field: "RegistrationNo",
-            headerName: "Registration No.",
             type: "string",
             width: 140,
             
@@ -143,7 +152,7 @@ export default function MyApp() {
                         </Link>
                         <Popconfirm
                             title="Are you sure to delete?"
-                            onConfirm={() => DeleteUser(params.row.id)}
+                            onConfirm={() => DeleteMember(params.row.id)}
                             onCancel={() => CancelDelete()}
                             okText="Yes"
                             cancelText="No"
@@ -165,7 +174,8 @@ export default function MyApp() {
             FatherName: user.FatherName,
             MembershipNo: user.MembershipNo,
             CNIC: user.CNIC,
-            PhoneNo: user.PhoneNo
+            PhoneNo: user.PhoneNo,
+            Picture: user.Picture
         }
     })
 

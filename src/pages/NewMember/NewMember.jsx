@@ -18,6 +18,7 @@ export default function User() {
     MembershipNo: "",
     CNIC: "",
     PhoneNo: "",
+    Address: "",
     Picture: ""
   });
 
@@ -28,29 +29,48 @@ export default function User() {
     SetNewMember({ ...NewMember, [name]: value });
     console.log(NewMember);
   }
-  function ImageInput(e) {
-    SetNewMember({ Picture: e.target.files[0] });
-}
+  const [state, setstate] = useState({
+    file: ""
+  })
 
-  function AddMember(e) {
-    e.preventDefault();
-    const NewMemberData = new FormData();
-    NewMemberData.append('Picture', NewMember.Picture);
-    const config = {
-        headers: {
-            'content-type': 'multipart/form-data'
-        }
-    };
-    axios.post(`http://localhost:4000/addnewmember`, NewMemberData, config)
-      .then(() => redirect.push('/members'))
-      .catch(err => window.alert(err));
+  function ImageInput(e) {
+    setstate({ file: e.target.files[0] });
+    console.log(e.target.files[0]);
   }
+
+  function UploadImage(e) {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('ProfileImage', state.file);
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    };
+    axios.post("http://localhost:4000/uploadprofileimage", formData, config)
+      .then((res) => {
+        SetNewMember({...NewMember, Picture: res.data});
+      }).catch((error) => {
+        alert(error)
+      });
+  }
+
+  async function AddNewMember(){
+    const result = await axios.post('http://localhost:4000/addnewmember', NewMember);
+    if (result.data) {
+      redirect.push(`/members`)
+    }
+    else {
+        redirect.push(`/newmember`)
+    }
+  }
+
 
   return (
     <>
       <div className="user">
         <div className="userUpdate">
-        <form onSubmit={(e)=>AddMember(e)}>
+
           <span className="userUpdateTitle">Add Member</span>
           <div className="userUpdateForm">
             <div className="userUpdateLeft">
@@ -91,11 +111,11 @@ export default function User() {
                   onChange={(e) => HandleInputs(e)}
                 />
               </div>
-              
+
             </div>
             <div className="userUpdateRight">
 
-            <div className="userUpdateItem">
+              <div className="userUpdateItem">
                 <label>Phone No.</label>
                 <input
                   type="tel"
@@ -113,22 +133,16 @@ export default function User() {
                   onChange={(e) => HandleInputs(e)}
                 />
               </div>
-              
-              <div className="userUpdateUpload">
-                <img
-                  className="userUpdateImg"
-                  src="http://localhost:4000/memberpictures/file1638537593274.png"
-                  alt=""
-                />
-                <label htmlFor="file">
-                  <Publish className="userUpdateIcon" />
-                </label>
-                <input type="file" id="file" name="Picture" onChange={ImageInput} style={{ display: "none" }} />
+
+              <div className="userUpdateItem">
+                <label>Profile Picture</label>
+                <input type="file" name="ProfileImage" style={{transition: "width 0.4s ease-in-out"}} onChange={ImageInput} />
+                <button className="ImageUploadButton" onClick={UploadImage}>Upload</button>
               </div>
-              <button className="userUpdateButton" type="submit"> Add </button>
+              <button className="userUpdateButton" onClick={AddNewMember}> Add </button>
             </div>
           </div>
-          </form>
+
         </div>
       </div>
     </>

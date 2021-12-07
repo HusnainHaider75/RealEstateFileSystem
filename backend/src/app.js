@@ -15,7 +15,7 @@ app.use(express.static('./public/'));
 
 //Intimation Background Image Upload
 const storage = multer.diskStorage({
-  destination: "./public/uploads/",
+  destination: "./public/BackgroundImages",
   filename: function (req, file, cb) {
     cb(null, "IntimationBackgroundPicture.jpg");
   }
@@ -27,7 +27,7 @@ const upload = multer({
 
 //Intimation Background Image Upload
 const storagebookingform = multer.diskStorage({
-  destination: "./public/uploads/",
+  destination: "./public/BackgroundImages/",
   filename: function (req, file, cb) {
     cb(null, "BookingFormBackgroundPicture.jpg");
   }
@@ -239,17 +239,26 @@ app.get(`/loadfiledata/:RegNo`, async (req, res) => {
 const MemberStorage = multer.diskStorage({
   destination: "./public/memberpictures/",
   filename: function (req, file, cb) {
-    cb(null, "file"+Date.now()+path.extname(file.originalname));
+    cb(null, "ProfileImage" + Date.now() + path.extname(file.originalname));
   }
 });
 
 const uploadMemberPicture = multer({
   storage: MemberStorage,
-}).single("Picture");
+}).single("ProfileImage");
 
 
 app.post("/uploadprofileimage", uploadMemberPicture, async (req, res) => {
-  
+  try {
+    res.send(req.file.filename)
+  }
+  catch (err) {
+    res.send(err)
+  }
+});
+
+
+app.post("/addnewmember", async (req, res) => {
   console.log(req.body);
   const {
     FullName,
@@ -258,6 +267,7 @@ app.post("/uploadprofileimage", uploadMemberPicture, async (req, res) => {
     CNIC,
     PhoneNo,
     Address,
+    Picture,
   } = req.body;
   const obj = new MembersModel({
     FullName,
@@ -266,6 +276,8 @@ app.post("/uploadprofileimage", uploadMemberPicture, async (req, res) => {
     CNIC,
     PhoneNo,
     Address,
+    Picture,
+    Status:true,
   });
   const MemberCreated = await obj.save();
   try {
@@ -273,6 +285,7 @@ app.post("/uploadprofileimage", uploadMemberPicture, async (req, res) => {
   } catch (err) {
     res.send(err);
   }
+
 });
 
 
@@ -287,51 +300,76 @@ app.get("/loadmembers", async (req, res) => {
 });
 
 
+app.get("/loadonemember/:id", async (req, res) => {
+  const MemberFound = await MembersModel.findOne({ _id: req.params.id });
+  try {
+    MemberFound ? res.send(MemberFound) : res.send(false);
+  } catch {
+    res.send();
+  }
+});
+
+app.put(`/updatemember/:id`, async (req, res) => {
+
+  console.log(req.body)
+  const {
+    FullName,
+    FatherName,
+    MembershipNo,
+    CNIC,
+    PhoneNo,
+    Address,
+    Picture
+  } = req.body;
+  const UpdatedMember = await MembersModel.findByIdAndUpdate(
+    { _id: req.params.id },
+    {
+      $set: {
+        FullName,
+        FatherName,
+        MembershipNo,
+        CNIC,
+        PhoneNo,
+        Address,
+        Picture
+      },
+     
+    },
+    { $inc: { "RegistrationNo": 1} }
+  );
+
+  try {
+    UpdatedMember ? res.send(true) : res.send(false);
+  } catch {
+    console.log("Something wrong");
+  }
+});
+
+
+app.put(`/deletemember/:id`, async (req, res) => {
+  const DeleteUser = await MembersModel.findOneAndUpdate(
+    { _id: req.params.id },
+    {
+      $set: {
+        Status: false,
+      },
+    }
+  );
+
+  try {
+    DeleteUser ? res.send(true) : res.send(false);
+  } catch {
+    res.send();
+  }
+});
+
+
+
+
+
 
 
 //Listen from Server
 app.listen(port, console.log(`Server is Running at port-${port}`));
 
 
-
-
-
-
-
-
-
-
-
-
-// const jwt = require('express-jwt');
-// const jwks = require('jwks-rsa');
-// const axios = require('axios');
-
-
-// //Auth0 Permissions and Roles Validation
-// // var jwtCheck = jwt({
-// //   secret: jwks.expressJwtSecret({
-// //     cache: true,
-// //     rateLimit: true,
-// //     jwksRequestsPerMinute: 5,
-// //     jwksUri: 'https://haiders715.us.auth0.com/.well-known/jwks.json'
-// //   }),
-// //   audience: 'https://royalgradencity/api',
-// //   issuer: 'https://haiders715.us.auth0.com/',
-// //   algorithms: ['RS256']
-// // }).unless({ path: ['/'] })
-// // app.use(jwtCheck);
-
-// // app.get('/testapi', async (req, res) => {
-// //     const accessToken = req.headers.authorization.split(' ')[1];
-// //     const response = await axios.get('https://haiders715.us.auth0.com/userinfo',
-// //       {
-// //         headers: {
-// //           Authorization: `Bearer ${accessToken}`
-// //         }
-// //       })
-// //     const userInfo = response.data;
-// //     console.log(userInfo)
-// //     res.send(userInfo);
-
-// // });
