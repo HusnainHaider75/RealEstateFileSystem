@@ -54,3 +54,12 @@
   height: 50px;
   border-radius: 50%;
 }
+#AssignButton{
+  padding: 0px;
+ 
+  margin-right: 5px;
+}
+#ViewIcon{
+  padding: 0px;
+  margin-right: 5px;
+}

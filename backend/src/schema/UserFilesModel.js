@@ -6,7 +6,8 @@ const DataModel = mongoose.Schema({
     CreatedBy : String,
     Status: Boolean,
     Detail: String,
-    IssueDate: String
+    IssueDate: String,
+    UserID: String
 });
 const DataSample =mongoose.model('UserFiles', DataModel);
 module.exports =DataSample;

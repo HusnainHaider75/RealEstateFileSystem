@@ -10,7 +10,7 @@ import './FileList.css'
 import { DeleteOutline } from "@material-ui/icons";
 import EditIcon from '@material-ui/icons/Edit';
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader";
 import { Popconfirm, message } from "antd";
@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function MyApp() {
+    const { id } = useParams();
 
     const [HideDelete, SetHideDelete] = useState("hidden");
     const [HideEdit, SetHideEdit] = useState("hidden");
@@ -53,19 +54,21 @@ export default function MyApp() {
         permissions.map((privilege, index) => {
             if (privilege === 'admin') {
                 SetHideDelete("visible");
+                console.log(id)
             }
             if (privilege === 'admin') {
                 SetHideEdit("visible");
+                console.log(id);
             }
-
         })
     }
+
     const redirect = useHistory();
     if (!localStorage.getItem("auth0spajs")) {
         redirect.push("/")
     }
 
-    const [LoadUser, setLoadUser] = useState([]);
+    const [LoadFile, setLoadFile] = useState([]);
     const [Loading, SetLoading] = useState(false);
 
     useEffect(() => {
@@ -87,21 +90,30 @@ export default function MyApp() {
         window.open(`/bookingQRCode/registration/${RegistrationNo}/type/${type}`)
     }
 
-    function AllUserData() {
-        axios.get('http://localhost:4000/loadfiles')
-            .then((res) => setLoadUser(res.data))
-            .catch(err => window.alert(err))
+    function AllFileData() {
+        console.log(id)
+        if (id) {
+            console.log(id);
+            axios.get(`http://localhost:4000/loadfiles/${id}`)
+                .then((res) => setLoadFile(res.data))
+                .catch(err => window.alert(err))
+        }
+        else {
+            axios.get('http://localhost:4000/loadfiles')
+                .then((res) => setLoadFile(res.data))
+                .catch(err => window.alert(err))
+        }
     }
 
     useEffect(() => {
-        AllUserData();
+        AllFileData();
     }
         , [])
 
-    async function DeleteUser(id) {
-        const result = await axios.put(`http://localhost:4000/deleteuser/${id}`);
+    async function DeleteFile(id) {
+        const result = await axios.put(`http://localhost:4000/deletefile/${id}`);
         message.success("Record Deleted!")
-        result.data ? AllUserData() : alert("Error");
+        result.data ? AllFileData() : alert("Error");
     }
     function CancelDelete() {
         message.error("Delete Record Cancelled!")
@@ -172,7 +184,7 @@ export default function MyApp() {
                         </Link>
                         <Popconfirm
                             title="Are you sure to delete?"
-                            onConfirm={() => DeleteUser(params.row.id)}
+                            onConfirm={() => DeleteFile(params.row.id)}
                             onCancel={() => CancelDelete()}
                             okText="Yes"
                             cancelText="No"
@@ -187,45 +199,38 @@ export default function MyApp() {
         },
     ];
 
-    const rows = LoadUser && LoadUser.map((user, index) => {
+    const rows = LoadFile && LoadFile.map((File, index) => {
+
         return {
-            id: user._id,
-            RegistrationNo: user.RegistrationNo,
-            BookingFormSerial: user.BookingFormSerial,
-            IntinitationLetterSerial: user.IntinitationLetterSerial,
-            CreatedBy: user.IssueDate,
-            IssueDate: user.IssueDate
+            id: File._id,
+            RegistrationNo: File.RegistrationNo,
+            BookingFormSerial: File.BookingFormSerial,
+            IntinitationLetterSerial: File.IntinitationLetterSerial,
+            CreatedBy: File.IssueDate,
+            IssueDate: File.IssueDate
         }
     })
-
 
     const classes = useStyles();
 
     return (
         <div className="userList">
-            {
-                Loading
-                    ?
-                    <div className="HomeLoader">
-                        <ClipLoader color={"#123abc"} loading={Loading} size={50} marginLeft={500} />
+            <div className={classes.root}>
+                <CssBaseline />
+                <Paper className={classes.content}>
+                    <div className={classes.toolbar}>
+                        <Typography variant="h6" component="h2" color="primary">
+                            Files
+                        </Typography>
+                        <Link to={"/newfile"}>
+                            <ImFolderPlus size={30} className="FileListAdd"></ImFolderPlus>
+                        </Link>
                     </div>
-                    :
-                    <div className={classes.root}>
-                        <CssBaseline />
-                        <Paper className={classes.content}>
-                            <div className={classes.toolbar}>
-                                <Typography variant="h6" component="h2" color="primary">
-                                    Files
-                                </Typography>
-                                <Link to={"/newfile"}>
-                                    <ImFolderPlus size={30} className="userListAdd"></ImFolderPlus>
-                                </Link>
-                            </div>
-                            <div style={{ height: 400, width: "100%" }}>
-                                <DataGrid rows={rows} columns={columns} />
-                            </div>
-                        </Paper>
+                    <div style={{ height: 400, width: "100%" }}>
+                        <DataGrid rows={rows} columns={columns} />
                     </div>
-            }        </div>
+                </Paper>
+            </div>
+        </div>
     );
 }

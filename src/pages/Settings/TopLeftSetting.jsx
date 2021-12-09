@@ -134,15 +134,7 @@ function TopLeftSetting() {
 
     return (
         <div className="SettingPage">
-        
-       { 
-          Loading
-          ?
-          <div className="HomeLoader">
-            <ClipLoader color={"#123abc"} loading={Loading} size={50} marginLeft={500} />
-          </div>
-          :
-         
+     
             <Grid xs={12} container >
 
                 <Grid item style={{ marginTop: "20px", marginRight: "20px", marginBottom: "10px", marginLeft: "50px" }} lg={5} xs={12} sm={12} md={12} >
@@ -391,8 +383,8 @@ function TopLeftSetting() {
                         <button onClick={SubmitPageSetting}>Update All</button>
                     </Grid>
                 </Grid>
-            </Grid>}
-        </div>
+            </Grid>
+    </div>
     )
 }
 export default TopLeftSetting;

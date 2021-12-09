@@ -3,12 +3,19 @@ const MemberModel = mongoose.Schema({
     FullName: String,
     FatherName: String,
     MembershipNo: String,
-    CNIC : Number,
+    CNIC: Number,
     PhoneNo: String,
     Address: String,
     Picture: String,
     Status: Boolean,
-    RegistrationNo: String
+    PrefixReg: {
+        type: String,
+        default:"RGC-2021-S"
+    },
+    PostfixReg: {
+        type: Number,
+        default: 0
+    }
 });
-const DataSample =mongoose.model('MembersData', MemberModel);
-module.exports =DataSample;
+const DataSample = mongoose.model('MembersData', MemberModel);
+module.exports = DataSample;

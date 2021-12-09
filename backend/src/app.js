@@ -10,6 +10,7 @@ const path = require('path')
 const UserFilesModel = require("./schema/UserFilesModel");
 const SettingsModel = require("./schema/SettingsModel");
 const MembersModel = require("./schema/MembersSchema");
+var ObjectId = require('mongodb').ObjectId;
 const multer = require('multer');
 app.use(express.static('./public/'));
 
@@ -57,7 +58,8 @@ app.post("/createfile", async (req, res) => {
     CreatedBy,
     Status: true,
     Detail,
-    IssueDate
+    IssueDate,
+    UserID: "",
   });
   const UserCreated = await obj.save();
   try {
@@ -65,20 +67,30 @@ app.post("/createfile", async (req, res) => {
   } catch (err) {
     res.send(err);
   }
+
 });
 
 //Load All User's Files
 app.get("/loadfiles", async (req, res) => {
-  const AllUser = await UserFilesModel.find({ Status: true });
+  const AllFiles = await UserFilesModel.find({ Status: true });
   try {
-    AllUser ? res.send(AllUser) : res.send(false);
+    AllFiles ? res.send(AllFiles) : res.send(false);
+  } catch {
+    res.send(false);
+  }
+});
+
+app.get("/loadfiles/:id", async (req, res) => {
+  const AllFiles = await UserFilesModel.find({ UserID: req.params.id, Status: true });
+  try {
+    AllFiles ? res.send(AllFiles) : res.send(false);
   } catch {
     res.send(false);
   }
 });
 
 //Delete specific data
-app.put(`/deleteuser/:id`, async (req, res) => {
+app.put(`/deletefile/:id`, async (req, res) => {
   const DeleteUser = await UserFilesModel.findOneAndUpdate(
     { _id: req.params.id },
     {
@@ -151,8 +163,6 @@ app.get(`/loadpagesetting`, async (req, res) => {
 
 //Change Values for fixing page Alignment (For QRCode)
 app.post(`/pagesetting`, upload, async (req, res) => {
-
-  console.log(req.body);
   let SettingString = JSON.stringify(req.body);
   let size = 0;
   const PageSettingExist = await SettingsModel.find();
@@ -207,7 +217,10 @@ app.post("/uploadbookingform", uploadBookingForm, (req, res, err) => {
 //Get Specific User's File Data
 app.post(`/formdata`, async (req, res) => {
   if (req.body.type === "intimation") {
-    const UserExist = await UserFilesModel.findOne({ RegistrationNo: req.body.registrationno, IntinitationLetterSerial: req.body.securitykey });
+    const UserExist = await UserFilesModel.findOne({
+      RegistrationNo: req.body.registrationno,
+      IntinitationLetterSerial: req.body.securitykey
+    });
     try {
       UserExist ? res.send(UserExist) : res.send(false);
     } catch (err) {
@@ -215,7 +228,10 @@ app.post(`/formdata`, async (req, res) => {
     }
   }
   else {
-    const UserExist = await UserFilesModel.findOne({ RegistrationNo: req.body.registrationno, BookingFormSerial: req.body.securitykey });
+    const UserExist = await UserFilesModel.findOne({
+      RegistrationNo: req.body.registrationno,
+      BookingFormSerial: req.body.securitykey
+    });
     try {
       UserExist ? res.send(UserExist) : res.send(false);
     } catch (err) {
@@ -257,9 +273,8 @@ app.post("/uploadprofileimage", uploadMemberPicture, async (req, res) => {
   }
 });
 
-
+//New Member
 app.post("/addnewmember", async (req, res) => {
-  console.log(req.body);
   const {
     FullName,
     FatherName,
@@ -277,7 +292,8 @@ app.post("/addnewmember", async (req, res) => {
     PhoneNo,
     Address,
     Picture,
-    Status:true,
+    Status: true,
+    PrefixReg: "RGC-2021-",
   });
   const MemberCreated = await obj.save();
   try {
@@ -300,6 +316,7 @@ app.get("/loadmembers", async (req, res) => {
 });
 
 
+//Load One Specific Member
 app.get("/loadonemember/:id", async (req, res) => {
   const MemberFound = await MembersModel.findOne({ _id: req.params.id });
   try {
@@ -309,8 +326,8 @@ app.get("/loadonemember/:id", async (req, res) => {
   }
 });
 
+//Update Member
 app.put(`/updatemember/:id`, async (req, res) => {
-
   console.log(req.body)
   const {
     FullName,
@@ -333,9 +350,8 @@ app.put(`/updatemember/:id`, async (req, res) => {
         Address,
         Picture
       },
-     
-    },
-    { $inc: { "RegistrationNo": 1} }
+
+    }
   );
 
   try {
@@ -345,7 +361,7 @@ app.put(`/updatemember/:id`, async (req, res) => {
   }
 });
 
-
+//Delete Member
 app.put(`/deletemember/:id`, async (req, res) => {
   const DeleteUser = await MembersModel.findOneAndUpdate(
     { _id: req.params.id },
@@ -363,7 +379,43 @@ app.put(`/deletemember/:id`, async (req, res) => {
   }
 });
 
+//Update Member
+app.put(`/assignfile/:id`, async (req, res) => {
 
+  const { RegistrationKey } = req.body;
+  const RegistrationFound = await UserFilesModel.findOne({ RegistrationNo: RegistrationKey })
+  if (!RegistrationFound) {
+    res.send({ status: 101 })// RegNo Not Exist
+  }
+  else 
+  {
+    const UserIdFound = await UserFilesModel.findOne({ RegistrationNo: RegistrationKey, UserID:"" })
+    if (!UserIdFound) 
+    {
+        res.send({ status: 102 })// UserId Already Exist
+    }
+
+    else 
+    {
+        const FileAssigned = await UserFilesModel.findOneAndUpdate(
+          { RegistrationNo: RegistrationKey },
+          {
+            $set: {
+              UserID: req.params.id,
+            },
+
+          }
+          );
+
+          try {
+            FileAssigned ? res.send(true) : res.send(false);
+          } catch (err){
+            res.send(err)
+          }
+    }
+  }
+
+});
 
 
 

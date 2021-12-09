@@ -36,11 +36,12 @@ function App() {
           <Route exact path="/test" component={Test}/>
           <Route exact path="/home" component={Home}/>
           <Route exact path="/files" component={FileList}/> 
+          <Route exact path="/files/member/:id" component={FileList}/> 
           <Route exact path="/members" component={Members}/> 
           <Route exact path="/newmember" component={NewMember}/> 
           <Route exact path="/updatemember/:id" component={UpdateMember}/> 
           <Route exact path="/updatefile/:id" component={UpdateFile}/> 
-          <Route exact path="/newfile" component={NewFile}/> 
+          <Route exact path="/newfile" component={NewFile}/>
           <Route exact path="/products" component={ProductList}/> 
           <Route exact path="/product/:productId" component={Product}/>
           <Route exact path="/newproduct" component={NewProduct}/> 
